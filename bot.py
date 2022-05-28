@@ -3,13 +3,14 @@ import os
 
 from telegram.ext import Updater, CommandHandler, MessageHandler, Filters
 
+logging.basicConfig(filename='bot.log', level=logging.INFO)
+
 API_TOKEN = os.environ.get('API_TOKEN')
 
 
 def greet_user(update, context):
     update.message.reply_text(
-        'Привет!\nЯ бот-помощник. Давай начнем общение!',
-    )
+        'Привет!\nЯ бот-помощник. Давай начнем общение!',)
 
 
 def main():
