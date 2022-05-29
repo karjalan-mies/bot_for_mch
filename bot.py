@@ -2,12 +2,11 @@ from email.message import Message
 from importlib.metadata import entry_points
 import logging
 import os
-import profile
 
 from telegram.ext import (CommandHandler, ConversationHandler, Filters,
                           MessageHandler, Updater)
 
-from user_profile import start_profile, name, gender, age
+from user_profile import start_profile, name, gender, age, wrong_answer
 from utils import main_keyboard
 
 logging.basicConfig(filename='bot.log', level=logging.INFO)
@@ -47,9 +46,12 @@ def main():
             'name': [MessageHandler(Filters.text, name)],
             'gender': [MessageHandler(Filters.regex('^(Мужской|Женский)$'),
                        gender)],
-            'age': [MessageHandler(Filters.text, age)]
+            'age': [MessageHandler(Filters.regex('^(\d+)$'), age)]
         },
-        fallbacks=[]
+        fallbacks=[
+            MessageHandler(Filters.text | Filters.photo | Filters.video |
+                           Filters.document | Filters.location, wrong_answer)
+        ]
     )
     dp.add_handler(user_profile)
     dp.add_handler(CommandHandler('start', greet_user))

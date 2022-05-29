@@ -1,4 +1,7 @@
+import logging
+
 from telegram import ParseMode, ReplyKeyboardMarkup, ReplyKeyboardRemove
+from telegram.ext import ConversationHandler
 from utils import main_keyboard
 
 
@@ -12,6 +15,7 @@ def start_profile(update, context):
 
 def name(update, context):
     user_name = update.message.text
+    logging.info(f'name: "{update.message.text}"')
     if len(user_name.split()) < 3:
         update.message.reply_text(
             'Необходимо, введите фамилию, имя и отчество.')
@@ -28,6 +32,7 @@ def name(update, context):
 
 
 def gender(update, context):
+    logging.info(f'gender: "{update.message.text}"')
     context.user_data['user_profile']['gender'] = update.message.text
     update.message.reply_text('Пожалуйста, введите Ваш возраст:',
                               reply_markup=ReplyKeyboardRemove())
@@ -36,6 +41,7 @@ def gender(update, context):
 
 def age(update, context):
     user_age = update.message.text
+    logging.info(f'age: "{update.message.text}"')
     if user_age.isdigit():
         context.user_data['user_profile']['age'] = int(update.message.text)
         user_profile = f'''<b>ФИО</b>: {
@@ -44,7 +50,12 @@ def age(update, context):
 <b>Возраст</b>: {context.user_data['user_profile']['age']}'''
         update.message.reply_text(user_profile, reply_markup=main_keyboard(),
                                   parse_mode=ParseMode.HTML)
+        return ConversationHandler.END
     else:
         update.message.reply_text(
             'Возраст должен состоять только из цифр.\nПовторите ввод!')
         return 'age'
+
+
+def wrong_answer(update, context):
+    update.message.reply_text('Некорректный ответ. Повторите ввод.')
