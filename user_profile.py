@@ -7,7 +7,7 @@ from utils import main_keyboard
 
 def start_profile(update, context):
     update.message.reply_text(
-        "Привет, как тебя зовут?\nВведи свои фамилию, имя и отчество:",
+        "Как к Вам обращаться?",
         reply_markup=ReplyKeyboardRemove()
     )
     return 'name'
@@ -16,9 +16,9 @@ def start_profile(update, context):
 def name(update, context):
     user_name = update.message.text
     logging.info(f'name: "{update.message.text}"')
-    if len(user_name.split()) < 3:
+    if len(user_name.strip()) == 0:
         update.message.reply_text(
-            'Необходимо, введите фамилию, имя и отчество.')
+            'Имя не может быть пустым.')
         return 'name'
     else:
         context.user_data['user_profile'] = {'name': user_name}
@@ -44,7 +44,7 @@ def age(update, context):
     logging.info(f'age: "{update.message.text}"')
     if user_age.isdigit():
         context.user_data['user_profile']['age'] = int(update.message.text)
-        user_profile = f'''<b>ФИО</b>: {
+        user_profile = f'''<b>Имя</b>: {
             context.user_data['user_profile']['name']}
 <b>Пол</b>: {context.user_data['user_profile']['gender']}
 <b>Возраст</b>: {context.user_data['user_profile']['age']}'''
