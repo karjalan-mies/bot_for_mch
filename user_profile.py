@@ -55,9 +55,8 @@ def age(update, context):
     <b>Возраст</b>: {context.user_data['user_profile']['age']}'''
     update.message.reply_text(user_profile, reply_markup=main_keyboard(),
                                   parse_mode=ParseMode.HTML)
-        # У тебя тут два ретурна выходит, я хз какой нужендля бота
-        return ConversationHandler.END
-        return 'age'
+
+    return ConversationHandler.END
 
 
 def wrong_answer(update, context):
