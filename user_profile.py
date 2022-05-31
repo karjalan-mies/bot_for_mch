@@ -40,6 +40,7 @@ def gender(update, context):
 
 
 def age(update, context):
+    # try-except Иногда здорово сокращают код, и делают его читабельнее. Но только когда ты можешь вызвать ошибку
     try:
         user_age = int(update.message.text)
     except:
