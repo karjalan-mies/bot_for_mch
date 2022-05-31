@@ -40,20 +40,23 @@ def gender(update, context):
 
 
 def age(update, context):
-    user_age = update.message.text
-    logging.info(f'age: "{update.message.text}"')
-    if user_age.isdigit():
-        context.user_data['user_profile']['age'] = int(update.message.text)
-        user_profile = f'''<b>Имя</b>: {
-            context.user_data['user_profile']['name']}
-<b>Пол</b>: {context.user_data['user_profile']['gender']}
-<b>Возраст</b>: {context.user_data['user_profile']['age']}'''
-        update.message.reply_text(user_profile, reply_markup=main_keyboard(),
-                                  parse_mode=ParseMode.HTML)
-        return ConversationHandler.END
-    else:
+    try:
+        user_age = int(update.message.text)
+    except:
         update.message.reply_text(
             'Возраст должен состоять только из цифр.\nПовторите ввод!')
+        
+    logging.info(f'age: "{update.message.text}"')
+    
+    context.user_data['user_profile']['age'] = int(update.message.text)
+    user_profile = f'''<b>Имя</b>: {
+            context.user_data['user_profile']['name']}
+    <b>Пол</b>: {context.user_data['user_profile']['gender']}
+    <b>Возраст</b>: {context.user_data['user_profile']['age']}'''
+    update.message.reply_text(user_profile, reply_markup=main_keyboard(),
+                                  parse_mode=ParseMode.HTML)
+        # У тебя тут два ретурна выходит, я хз какой нужендля бота
+        return ConversationHandler.END
         return 'age'
 
 
