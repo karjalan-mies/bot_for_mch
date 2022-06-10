@@ -5,6 +5,8 @@ import json
 import logging
 import os
 from pathlib import Path
+
+from telegram import ReplyKeyboardMarkup
 from celery import shared_task
 import django
 q=str(Path(__file__).resolve().parent.parent.parent)
@@ -38,6 +40,11 @@ def get_user_data(update):
     return user_data
 
 
+def test(update, context):
+    update.message.reply_text('Тест пройден',
+                              reply_markup=ReplyKeyboardMarkup([['/test']]))
+
+
 def main():
     # my_bot = Updater(API_TOKEN, use_context=True)
     # dp = my_bot.dispatcher
@@ -64,6 +71,7 @@ def main():
         states={},
         fallbacks=[]
     )
+    dp.add_handler(CommandHandler('test', test))
     dp.add_handler(creating_settings)
     dp.add_handler(user_profile)
 
