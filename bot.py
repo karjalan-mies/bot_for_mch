@@ -7,7 +7,8 @@ import os
 from pathlib import Path
 from celery import shared_task
 import django
-q=str(Path(__file__).resolve().parent.parent.parent)
+
+# Загружаем настройки Джанго
 sys.path.append(str(Path(__file__).resolve().parent))
 os.environ['DJANGO_SETTINGS_MODULE'] = 'telega.settings'
 django.setup()
@@ -27,7 +28,7 @@ my_bot = Updater(API_TOKEN, use_context=True)
 dp = my_bot.dispatcher
 
 
-def get_user_data(update):
+def get_user_data(update):#Можно ли уже это убрать?????????????????
     print(dir(update.message.from_user))
     user_data = {}
     user_data['full_name'] = update.message.chat.full_name
