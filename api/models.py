@@ -4,12 +4,12 @@ from django.db import models
 class UserTelegram(models.Model):
     """Модель для хранения пользователей"""
     name = models.TextField(max_length=128, blank=True, null=True,verbose_name="Никнейм пользователя")
-    first_name = models.TextField(max_length=70, blank=True, null=True,verbose_name="Имя пользователя")
-    last_name = models.TextField(max_length=70, blank=True, null=True,verbose_name="Фамилия пользователя")
-    patronymic = models.TextField(max_length=70, blank=True, null=True,verbose_name="Отчество пользователя")
     sex = models.BooleanField(blank=True, null=True,verbose_name="Пол (Мужской-1, Женский-0) пользователя")
     tg_id = models.IntegerField(verbose_name="Уникальный ИД телеграмма")#unique=True
     age = models.IntegerField(default=0,verbose_name="Возраст пользователя")
+    education_start=models.DateField(auto_now_add=True)
+    education_end=models.DateField(blank=True, null=True)
+    remind_interval=models.IntegerField(default=86400)
 # Create your models here.
 
 class MessageText(models.Model):
