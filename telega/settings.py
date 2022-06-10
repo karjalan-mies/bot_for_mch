@@ -77,10 +77,10 @@ WSGI_APPLICATION = 'telega.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'MyBase',
-        'USER': 'postgres',
-        'PASSWORD': 'admin',
-        'HOST': 'localhost',
+        'NAME': 'd3p09306m5d0j5',
+        'USER': 'nkhxaalirvawij',
+        'PASSWORD': '0bfa1baa7bcf276972733fc15347abb23587bcf06f18da8ec91537283830f283',
+        'HOST': 'ec2-52-48-159-67.eu-west-1.compute.amazonaws.com',
         'PORT': '5432'}
 }
 
