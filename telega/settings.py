@@ -174,10 +174,10 @@ LOGGING = {
             'filename': 'debug.log'
         }
     },
-    'loggers': {
-        '': {
-            'level': 'INFO',
-            'handlers': ['console', 'file']
-        }
-    }
+    # 'loggers': {
+    #     '': {
+    #         'level': 'INFO',
+    #         'handlers': ['console', 'file']
+    #     }
+    # }
 }

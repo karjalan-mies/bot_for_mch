@@ -30,6 +30,11 @@ my_bot = Updater(API_TOKEN, use_context=True)
 dp = my_bot.dispatcher
 
 
+def test(update, context):
+    update.message.reply_text('Тест пройден',
+                              reply_markup=ReplyKeyboardMarkup([['/test']]))
+
+
 def get_user_data(update):#Можно ли уже это убрать?????????????????
     print(dir(update.message.from_user))
     user_data = {}
@@ -39,11 +44,6 @@ def get_user_data(update):#Можно ли уже это убрать???????????
     user_data['username'] = update.message.chat.username
     user_data['user_id'] = update.message.chat.id
     return user_data
-
-
-def test(update, context):
-    update.message.reply_text('Тест пройден',
-                              reply_markup=ReplyKeyboardMarkup([['/test']]))
 
 
 def main():
