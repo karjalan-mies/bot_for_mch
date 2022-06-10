@@ -1,5 +1,5 @@
 import os
-import apps
+from api import apps
 
 if os.environ.get('HEROKU') is not None:
     import logging
