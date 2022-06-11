@@ -133,9 +133,13 @@ STATICFILES_DIRS = (
 # https://docs.djangoproject.com/en/4.0/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+
 redis_url = os.getenv('REDISTOGO_URL', 'redis://localhost:6379')
 redis = redis.from_url(redis_url)
 redis_url=redis_url.split("@")
+
+
 REDIS_HOST = redis_url[1].split(":")[0]
 REDIS_PORT = redis_url[1].split(":")[1][0:-1]
 REDIS_PWD=redis_url[0].split("redis://redistogo:")[1]
