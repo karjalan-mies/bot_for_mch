@@ -2,7 +2,7 @@ import logging
 
 from telegram import ReplyKeyboardRemove
 
-from api.models import UserTelegram
+from api.models import Target, UserTelegram
 from .utils import get_message_text
 
 
@@ -21,10 +21,11 @@ def course_name(update, context):
             'Название курса не может быть пустым.')
         return 'name'
     else:
-        # Сохраняем имя пользователя по его телеграмм ИД
+        # Сохраняем название курса
         user = UserTelegram.objects.get(tg_id=update.message.chat_id)
-        user.course_name = course_name
-        user.save()
+        target = Target.objects.get(user)
+        target.course_name = course_name
+        target.save()
         logging.info(f'course_name: "{update.message.text}"')
     message_text = get_message_text(202, update)
     update.message.reply_text(message_text, reply_markup=ReplyKeyboardRemove())
@@ -39,3 +40,6 @@ def which_dates(update, context):
     user.education_start = '-'.join(dates[1].split('.')[::-1])
     user.save()
     logging.info(f'Добавлены даты обучения с {dates[0]} по {dates[1]}')
+    message_text = get_message_text(203, update)
+    update.message.reply_text(message_text, reply_markup=ReplyKeyboardRemove())
+    return 
