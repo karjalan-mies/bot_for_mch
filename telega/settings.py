@@ -140,13 +140,13 @@ redis = redis.from_url(redis_url)
 redis_url=redis_url.split("@")
 
 
-REDIS_HOST = redis_url[1].split(":")[0]
-REDIS_PORT = redis_url[1].split(":")[1][0:-1]
-REDIS_PWD=redis_url[0].split("redis://redistogo:")[1]
+# REDIS_HOST = redis_url[1].split(":")[0]
+# REDIS_PORT = redis_url[1].split(":")[1][0:-1]
+# REDIS_PWD=redis_url[0].split("redis://redistogo:")[1]
 
-CELERY_BROKER_URL ="redis://redistogo:b682d3530aff18b50e66592d5fc242b9@porgy.redistogo.com:9738/0"
-CELERY_BROKER_TRANSPORT_OPTION = {'visibility_timeout': 3600}
-CELERY_RESULT_BACKEND = "redis://redistogo:b682d3530aff18b50e66592d5fc242b9@porgy.redistogo.com:9738/0"
+# CELERY_BROKER_URL ="redis://redistogo:b682d3530aff18b50e66592d5fc242b9@porgy.redistogo.com:9738/0"
+# CELERY_BROKER_TRANSPORT_OPTION = {'visibility_timeout': 3600}
+# CELERY_RESULT_BACKEND = "redis://redistogo:b682d3530aff18b50e66592d5fc242b9@porgy.redistogo.com:9738/0"
 
 # REDIS_HOST = '127.0.0.1'
 # REDIS_PORT = '6379'
