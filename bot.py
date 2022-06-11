@@ -18,10 +18,10 @@ django.setup()
 from telegram.ext import (CommandHandler, ConversationHandler, Filters,
                           MessageHandler, Updater)
 
-from bot_utils.profile_settings import set_up_profile
-from bot_utils.user_profile import (start_profile, name, gender,
-                                    wrong_answer, greet_user)
-from bot_utils.utils import main_keyboard
+from bot_utils.profile_settings import set_up_profile, course_name, which_dates
+from bot_utils.user_profile import start_profile, name, gender, greet_user
+
+from bot_utils.utils import wrong_answer
 
 logging.basicConfig(filename='bot.log', level=logging.INFO)
 
@@ -33,17 +33,6 @@ dp = my_bot.dispatcher
 def test(update, context):
     update.message.reply_text('Тест пройден',
                               reply_markup=ReplyKeyboardMarkup([['/test']]))
-
-
-def get_user_data(update):#Можно ли уже это убрать?????????????????
-    print(dir(update.message.from_user))
-    user_data = {}
-    user_data['full_name'] = update.message.chat.full_name
-    user_data['first_name'] = update.message.chat.first_name
-    user_data['last_name'] = update.message.chat.last_name
-    user_data['username'] = update.message.chat.username
-    user_data['user_id'] = update.message.chat.id
-    return user_data
 
 
 def main():
@@ -69,8 +58,14 @@ def main():
         entry_points=[
             MessageHandler(Filters.regex('^(Настроить)$'), set_up_profile)
         ],
-        states={},
-        fallbacks=[]
+        states={
+            'course_name': [MessageHandler(Filters.text, course_name)],
+            'which_dates': [MessageHandler(
+                Filters.regex('^\d{2}\.\d{2}\.\d{4} \d{2}\.\d{2}\.\d{4}$'),
+                which_dates)]
+            },
+        fallbacks=[MessageHandler(Filters.text | Filters.photo | Filters.video |
+                           Filters.document | Filters.location, wrong_answer)]
     )
     dp.add_handler(CommandHandler('test', test))
     dp.add_handler(creating_settings)

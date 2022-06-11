@@ -88,7 +88,3 @@ def gender(update, context):
                               reply_markup=ReplyKeyboardMarkup(keyboard_markup)
                               )
     return ConversationHandler.END
-
-
-def wrong_answer(update, context):
-    update.message.reply_text('Некорректный ответ. Повторите ввод.')
