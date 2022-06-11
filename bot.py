@@ -37,8 +37,6 @@ dp = my_bot.dispatcher
 
 from telega.settings import redis_url
 def test(update, context):
-    update.message.reply_text('Тест пройден',
-                              reply_markup=ReplyKeyboardMarkup([['/test']]))
     @shared_task(name="repeat_test")
     def repeat_test():
         update.message.reply_text('Тест пройден',
