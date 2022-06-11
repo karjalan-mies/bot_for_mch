@@ -6,14 +6,20 @@ import logging
 import os
 from pathlib import Path
 
+
 from telegram import ReplyKeyboardMarkup
-from celery import shared_task
+
 import django
 
 # Загружаем настройки Джанго
 sys.path.append(str(Path(__file__).resolve().parent))
 os.environ['DJANGO_SETTINGS_MODULE'] = 'telega.settings'
 django.setup()
+
+from django.utils import timezone
+
+from celery import shared_task
+from django_celery_beat.models import PeriodicTask, IntervalSchedule
 
 from telegram.ext import (CommandHandler, ConversationHandler, Filters,
                           MessageHandler, Updater)
@@ -25,14 +31,24 @@ from bot_utils.utils import main_keyboard
 
 logging.basicConfig(filename='bot.log', level=logging.INFO)
 
-API_TOKEN = os.environ.get('API_TOKEN')
+API_TOKEN = "5304608341:AAGF6us_q8qso_KDV_QxIqsrblQdfBPOQUw"
 my_bot = Updater(API_TOKEN, use_context=True)
 dp = my_bot.dispatcher
 
 
 def test(update, context):
-    update.message.reply_text('Тест пройден',
-                              reply_markup=ReplyKeyboardMarkup([['/test']]))
+    @shared_task(name="repeat_test")
+    def repeat():
+        update.message.reply_text('Тест пройден',
+                                  reply_markup=ReplyKeyboardMarkup([['/test']]))
+    PeriodicTask.objects.create(
+        name="TESTTASK",
+        task='repeat_test',
+        interval=IntervalSchedule.objects.get(every=10, period='seconds'),
+        args="",
+        start_time=timezone.now(),
+    )
+
 
 
 def get_user_data(update):#Можно ли уже это убрать?????????????????
