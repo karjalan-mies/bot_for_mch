@@ -31,10 +31,10 @@ API_TOKEN = os.environ.get('API_TOKEN')
 my_bot = Updater(API_TOKEN, use_context=True)
 dp = my_bot.dispatcher
 
-# def test():
+def test(update,env):
 #     logging.info('ВТЕСТЕ')
-    # update.message.reply_text('Тест пройден',
-    #                               reply_markup=ReplyKeyboardMarkup([['/test']]))
+    update.message.reply_text('Тест пройден',
+                                  reply_markup=ReplyKeyboardMarkup([['/test']]))
     # time.sleep(5)
     # test=PeriodicTask.objects.create(
     #     name="TESTTASK",
