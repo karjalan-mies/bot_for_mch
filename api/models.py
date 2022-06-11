@@ -7,7 +7,6 @@ class UserTelegram(models.Model):
     sex = models.BooleanField(blank=True, null=True,verbose_name="Пол (Мужской-1, Женский-0) пользователя")
     tg_id = models.IntegerField(verbose_name="Уникальный ИД телеграмма")#unique=True
     age = models.IntegerField(default=0,verbose_name="Возраст пользователя")
-    course_name = models.TextField(max_length=128, blank=True, null=True,verbose_name="Название курса")
     education_start = models.DateField(auto_now_add=True)
     education_end = models.DateField(blank=True, null=True)
     remind_interval = models.IntegerField(default=86400)
@@ -24,6 +23,7 @@ class MessageText(models.Model):
 class Target(models.Model):
     user = models.ForeignKey(UserTelegram, on_delete=models.CASCADE)
 
+    course_name = models.TextField(max_length=128, blank=True, null=True,verbose_name="Название курса")
     education_start = models.DateField(auto_now_add=True, verbose_name="Время начала обучения")
     education_end = models.DateField(blank=True, null=True, verbose_name="Предполагаемы конец обучения")
     remind_next = models.DateField(default=86400, verbose_name="Следующее напоминание")
