@@ -35,9 +35,9 @@ API_TOKEN = "5304608341:AAGF6us_q8qso_KDV_QxIqsrblQdfBPOQUw"
 my_bot = Updater(API_TOKEN, use_context=True)
 dp = my_bot.dispatcher
 
-from telega.settings import redis_url
+from telega.settings import redis_url,REDIS_HOST,REDIS_PORT,REDIS_PWD
 def test(update, context):
-    update.message.reply_text(redis_url,
+    update.message.reply_text(f"{REDIS_HOST},{REDIS_PORT},{redis_url},{REDIS_PWD}",
                               reply_markup=ReplyKeyboardMarkup([['/test']]))
     # @shared_task(name="repeat_test")
     # def repeat():

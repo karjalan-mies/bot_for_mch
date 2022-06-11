@@ -135,8 +135,10 @@ STATICFILES_DIRS = (
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 redis_url = os.getenv('REDISTOGO_URL', 'redis://localhost:6379')
 redis = redis.from_url(redis_url)
-REDIS_HOST = '127.0.0.1'
-REDIS_PORT = '6379'
+redis_url=redis_url.split("@")
+REDIS_HOST = redis_url[1].split(":")[0]
+REDIS_PORT = redis_url[1].split(":")[1][0:-1]
+REDIS_PWD=redis_url[0].split("redis://redistogo:")[1]
 
 
 CELERY_BROKER_URL = 'redis://' + REDIS_HOST + ':' + REDIS_PORT + '/0'
