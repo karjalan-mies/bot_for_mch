@@ -4,7 +4,6 @@ import time
 import logging
 import os
 from pathlib import Path
-import schedule
 
 from telegram import ReplyKeyboardMarkup
 
