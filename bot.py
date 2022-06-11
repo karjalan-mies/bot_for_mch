@@ -45,7 +45,7 @@ def test(update, context):
         name="TESTTASK",
         task='repeat_test',
         interval=IntervalSchedule.objects.get(every=10, period='seconds'),
-        args=json.dumps([update,context]),
+        args=json.dumps([update.__dict__]),
         start_time=timezone.now(),
     )
 
