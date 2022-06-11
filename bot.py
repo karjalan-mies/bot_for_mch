@@ -27,7 +27,7 @@ from bot_utils.user_profile import (start_profile, name, gender,
 
 logging.basicConfig(filename='bot.log', level=logging.INFO)
 
-API_TOKEN = "5304608341:AAGF6us_q8qso_KDV_QxIqsrblQdfBPOQUw"
+API_TOKEN = os.environ.get('API_TOKEN')
 my_bot = Updater(API_TOKEN, use_context=True)
 dp = my_bot.dispatcher
 
