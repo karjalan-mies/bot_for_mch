@@ -11,7 +11,7 @@ https://docs.djangoproject.com/en/4.0/ref/settings/
 """
 import os
 from pathlib import Path
-
+import redis
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -120,7 +120,7 @@ USE_L10N = True
 MEDIA_URL = "/media/"
 MEDIA_ROOT = os.path.join(BASE_DIR, "media")
 
-STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 STATIC_URL = '/static/'
 
 STATICFILES_DIRS = (
@@ -134,20 +134,27 @@ STATICFILES_DIRS = (
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-REDIS_HOST = '127.0.0.1'
-REDIS_PORT = '6379'
 
-
-CELERY_BROKER_URL = 'redis://' + REDIS_HOST + ':' + REDIS_PORT + '/0'
-CELERY_BROKER_TRANSPORT_OPTION = {'visibility_timeout': 3600}
-CELERY_RESULT_BACKEND = 'redis://' + REDIS_HOST + ':' + REDIS_PORT + '/0'
-CELERY_ACCEPT_CONTENT = ['application/json']
-CELERY_TASK_SERIALIZER = 'json'
-CELERY_RESULT_SERIALIZER = 'json'
-CELERY_TASK_TRACK_STARTED = True
-CELERY_TASK_TIME_LIMIT = 60
-
-CELERY_BEAT_SCHEDULER='django_celery_beat.schedulers:DatabaseScheduler'
+# redis_url = os.getenv('REDISTOGO_URL', 'redis://localhost:6379')
+# redis = redis.from_url(redis_url)
+# redis_url=redis_url.split("@")
+#
+#
+# REDIS_HOST = redis_url[1].split(":")[0]
+# REDIS_PORT = redis_url[1].split(":")[1][0:-1]
+# REDIS_PWD=redis_url[0].split("redis://redistogo:")[1]
+#
+# CELERY_BROKER_URL ="redis://redistogo:b682d3530aff18b50e66592d5fc242b9@porgy.redistogo.com:9738/0"
+# CELERY_BROKER_TRANSPORT_OPTION = {'visibility_timeout': 3600}
+# CELERY_RESULT_BACKEND = "redis://redistogo:b682d3530aff18b50e66592d5fc242b9@porgy.redistogo.com:9738/0"
+#
+# CELERY_ACCEPT_CONTENT = ['application/json']
+# CELERY_TASK_SERIALIZER = 'json'
+# CELERY_RESULT_SERIALIZER = 'json'
+# CELERY_TASK_TRACK_STARTED = True
+# CELERY_TASK_TIME_LIMIT = 60
+#
+# CELERY_BEAT_SCHEDULER='django_celery_beat.schedulers:DatabaseScheduler'
 
 LOGGING = {
     'version': 1,
