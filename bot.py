@@ -35,20 +35,22 @@ API_TOKEN = "5304608341:AAGF6us_q8qso_KDV_QxIqsrblQdfBPOQUw"
 my_bot = Updater(API_TOKEN, use_context=True)
 dp = my_bot.dispatcher
 
-
+from telega.settings import redis_url
 def test(update, context):
-    @shared_task(name="repeat_test")
-    def repeat():
-        update.message.reply_text('Тест пройден',
-                                  reply_markup=ReplyKeyboardMarkup([['/test']]))
-    test=PeriodicTask.objects.create(
-        name="TESTTASK",
-        task='repeat_test',
-        interval=IntervalSchedule.objects.get(every=10, period='seconds'),
-        args="",
-        start_time=timezone.now(),
-    )
-    q=test
+    update.message.reply_text(redis_url,
+                              reply_markup=ReplyKeyboardMarkup([['/test']]))
+    # @shared_task(name="repeat_test")
+    # def repeat():
+    #     update.message.reply_text('Тест пройден',
+    #                               reply_markup=ReplyKeyboardMarkup([['/test']]))
+    # test=PeriodicTask.objects.create(
+    #     name="TESTTASK",
+    #     task='repeat_test',
+    #     interval=IntervalSchedule.objects.get(every=10, period='seconds'),
+    #     args="",
+    #     start_time=timezone.now(),
+    # )
+    # q=test
 
 
 
