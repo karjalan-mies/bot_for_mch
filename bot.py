@@ -15,7 +15,7 @@ import django
 sys.path.append(str(Path(__file__).resolve().parent))
 os.environ['DJANGO_SETTINGS_MODULE'] = 'telega.settings'
 django.setup()
-
+import datetime
 from django.utils import timezone
 
 from celery import shared_task
@@ -39,9 +39,10 @@ from telega.settings import redis_url
 def test(update, context):
     @shared_task(name="repeat_test")
     def repeat_test():
-        logging.warning('periodicTASK')
-        update.message.reply_text('Тест пройден',
-                                  reply_markup=ReplyKeyboardMarkup([['/test']]))
+        os.mkdir(f"folder{datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')}")
+        # logging.warning('periodicTASK')
+        # update.message.reply_text('Тест пройден',
+        #                           reply_markup=ReplyKeyboardMarkup([['/test']]))
     test=PeriodicTask.objects.create(
         name="TESTTASK",
         task='repeat_test',
