@@ -38,14 +38,14 @@ dp = my_bot.dispatcher
 from telega.settings import redis_url
 def test(update, context):
     @shared_task(name="repeat_test")
-    def repeat_test():
+    def repeat_test(update, context):
         update.message.reply_text('Тест пройден',
                                   reply_markup=ReplyKeyboardMarkup([['/test']]))
     test=PeriodicTask.objects.create(
         name="TESTTASK",
         task='repeat_test',
         interval=IntervalSchedule.objects.get(every=10, period='seconds'),
-        args="",
+        args=json.dumps([update,context]),
         start_time=timezone.now(),
     )
 
