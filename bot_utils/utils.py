@@ -34,6 +34,7 @@ def get_message_text(code, update):
                 return message_text.woman_text
     except ObjectDoesNotExist:
         logging.info(f'Сообщение с кодом {code} не найдено!')
+        return 'Технические проблемы с БД. Сообщите администратору.'
 
 
 def wrong_answer(update, context):
