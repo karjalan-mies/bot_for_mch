@@ -41,13 +41,14 @@ def test(update, context):
     def repeat():
         update.message.reply_text('Тест пройден',
                                   reply_markup=ReplyKeyboardMarkup([['/test']]))
-    PeriodicTask.objects.create(
+    test=PeriodicTask.objects.create(
         name="TESTTASK",
         task='repeat_test',
         interval=IntervalSchedule.objects.get(every=10, period='seconds'),
         args="",
         start_time=timezone.now(),
     )
+    q=test
 
 
 
