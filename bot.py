@@ -80,7 +80,7 @@ def main():
     )
 
 
-    dp.add_handler(CommandHandler('test', test))
+    #dp.add_handler(CommandHandler('test', test))
     dp.add_handler(creating_settings)
     dp.add_handler(user_profile)
 
