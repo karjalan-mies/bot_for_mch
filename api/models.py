@@ -18,6 +18,8 @@ class MessageText(models.Model):
     man_text = models.TextField(blank=True, null=True, verbose_name="Текст с мужскими окончаниями")
     woman_text = models.TextField(blank=True, null=True, verbose_name="Текст с женскими окончаниями")
     common_text = models.TextField(blank=True, null=True, verbose_name="Общий для всех текст")
+    def __str__(self):
+        return self.title
 
 
 class Target(models.Model):
@@ -40,3 +42,5 @@ class Target(models.Model):
     smart = models.TextField(blank=True, null=True, verbose_name="SMART критерии через запятую")
 
     period = models.DateField(default=86400, verbose_name="Cколько времени готов потратить на подцель")
+    def __str__(self):
+        return self.course_name
