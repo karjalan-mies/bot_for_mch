@@ -145,9 +145,9 @@ REDIS_PORT = redis_url[1].split(":")[1][0:-1]
 REDIS_PWD=redis_url[0].split("redis://redistogo:")[1]
 
 
-CELERY_BROKER_URL = 'redis://' + REDIS_HOST + ':' + REDIS_PORT + '/0'
+CELERY_BROKER_URL = f'redis://{REDIS_HOST}?password={REDIS_PWD}:{REDIS_PORT}/0'
 CELERY_BROKER_TRANSPORT_OPTION = {'visibility_timeout': 3600}
-CELERY_RESULT_BACKEND = 'redis://' + REDIS_HOST + ':' + REDIS_PORT + '/0'
+CELERY_RESULT_BACKEND = f'redis://{REDIS_HOST}?password={REDIS_PWD}:{REDIS_PORT}/0'
 CELERY_ACCEPT_CONTENT = ['application/json']
 CELERY_TASK_SERIALIZER = 'json'
 CELERY_RESULT_SERIALIZER = 'json'
