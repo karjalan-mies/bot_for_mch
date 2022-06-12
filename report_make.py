@@ -15,7 +15,7 @@ def graphs(statistic):
 
     def pie(statistic, time):
         labels = 'Пн', 'Вт', 'Ср', 'Чт', 'Пт', 'Сб', 'Вс'
-        sizes = statistic[1].split("")
+        sizes = [int(i) for i in statistic[1]]
 
         fig1, ax1 = plt.subplots()
         colors = plt.get_cmap('RdBu')(np.linspace(0.2, 1, len(sizes)))
@@ -30,7 +30,7 @@ def graphs(statistic):
 
         day = ('Пн', 'Вт', 'Ср', 'Чт', 'Пт', 'Сб', 'Вс')
         y_pos = np.arange(len(day))
-        performance = statistic[2].split('')
+        performance = [int(i) for i in statistic[2]]
 
         rects1 = ax.barh(y_pos, performance, align='center', )
         ax.bar_label(rects1, padding=3)
@@ -43,14 +43,14 @@ def graphs(statistic):
 
     def mounts(statistic, time):
         names = ('Пн', 'Вт', 'Ср', 'Чт', 'Пт', 'Сб', 'Вс')
-        values = statistic[3].split("")
+        values = [int(i) for i in statistic[3]]
 
         fig, axs = plt.subplots()
         axs.plot(names, values)
         fig.suptitle('Categorical Plotting')
         plt.savefig(f'stat/{time}/mounts.png')
 
-    def document_save( time):
+    def document_save(time):
         tmplt = DocxTemplate("report.docx")
         stat = statistic[0].split("@")
         context = {"subject": stat[0],
@@ -58,6 +58,9 @@ def graphs(statistic):
                    "learnA": stat[2],
                    "rememberB": stat[3],
                    "task": stat[4],
+                   "durat": stat[5],
+                   "per": stat[6]
+
                    }
         tmplt.render(context)
 
