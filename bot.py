@@ -5,7 +5,8 @@ import logging
 import os
 from pathlib import Path
 import json
-from telegram import ReplyKeyboardMarkup
+
+from telebot import apihelper
 
 import django
 
@@ -15,17 +16,18 @@ os.environ['DJANGO_SETTINGS_MODULE'] = 'telega.settings'
 django.setup()
 
 from telegram.ext import (CommandHandler, ConversationHandler, Filters,
-                          MessageHandler, Updater)
+                          MessageHandler, Updater,messagequeue)
 
 from bot_utils.handlers import user_profile, creating_settings, smart, planning
 from bot_utils.user_profile import greet_user
+from bot_utils.utils import test
 
 logging.basicConfig(filename='bot.log', level=logging.INFO)
 
 API_TOKEN = os.environ.get('API_TOKEN')
 
-def test(update,env):
-    pass
+# def test(update,env):
+#     pass
     # with open('file.json') as file:
     #     data = json.load(file).get("res")
     #     for mess in data:
@@ -61,9 +63,9 @@ def main():
     my_bot.start_polling()
     my_bot.idle()
 
+apihelper.ENABLE_MIDDLEWARE = True
 
-
-# asyncio.run(test())
+asyncio.run(test())
 
 
 if __name__ == "__main__":
