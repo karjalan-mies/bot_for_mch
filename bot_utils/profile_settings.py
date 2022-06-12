@@ -46,16 +46,9 @@ def which_dates(update, context):
     message_text = get_message_text(203, update)
     reply_keyboard = [['Ok!']]
     update.message.reply_text(message_text,
-                              reply_markup=ReplyKeyboardMarkup(reply_keyboard))
-    return 'which_progress'
-
-
-def which_progress(update, context):
-    logging.info('Вызов функции "which_progress"')
-    message_text = get_message_text(204, update)
-    reply_keyboard = [['По каждой теме', 'Общий прогресс']]
-    update.message.reply_text(message_text,
-                              reply_markup=ReplyKeyboardMarkup(reply_keyboard))
+                              reply_markup=ReplyKeyboardMarkup(
+                                reply_keyboard,
+                                resize_keyboard=True))
     return 'which_days'
 
 
@@ -64,7 +57,10 @@ def which_days(update, context):
     message_text = get_message_text(205, update)
     reply_keyboard = [['Пн', 'Вт', 'Ср', 'Чт', 'Пт', 'Сб', 'Вс']]
     update.message.reply_text(message_text,
-                              reply_markup=ReplyKeyboardMarkup(reply_keyboard))
+                              reply_markup=ReplyKeyboardMarkup(
+                                reply_keyboard,
+                                resize_keyboard=True)
+                              )
     return 'set_targets'
 
 
@@ -73,7 +69,9 @@ def set_targets(update, context):
     reply_keyboard = [['Ok!']]
     message_text = get_message_text(206, update)
     update.message.reply_text(message_text,
-                              reply_markup=ReplyKeyboardMarkup(reply_keyboard))
+                              reply_markup=ReplyKeyboardMarkup(
+                                reply_keyboard,
+                                resize_keyboard=True))
     return 'why_study'
 
 
@@ -92,16 +90,18 @@ def what_do_you_want(update, context):
 
 
 def how_life_will_change(update, context):
-    logging.info('Вызов функции "what_do_you_want"')
+    logging.info('Вызов функции "how_life_will_change"')
     message_text = get_message_text(209, update)
     update.message.reply_text(message_text, reply_markup=ReplyKeyboardRemove())
     return 'what_is_the_SMART'
 
 
 def what_is_the_SMART(update, context):
-    logging.info('Вызов функции "what_do_you_want"')
+    logging.info('Вызов функции "what_is_the_SMART"')
     message_text = get_message_text(210, update)
     reply_keyboard = [['Начать планирование', 'Что такое S.M.A.R.T']]
     update.message.reply_text(message_text,
-                              reply_markup=ReplyKeyboardMarkup(reply_keyboard))
+                              reply_markup=ReplyKeyboardMarkup(
+                                reply_keyboard,
+                                resize_keyboard=True))
     return ConversationHandler.END
