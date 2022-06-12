@@ -37,7 +37,7 @@ def graphs(statistic):
         ax.set_yticks(y_pos, labels=day)
         ax.invert_yaxis()  # labels read top-to-bottom
         ax.set_xlabel('Оценка')
-        ax.set_title('Твое настроение за неделю')
+        ax.set_title('Количество выполненных задач')
 
         plt.savefig(f'stat/{time}/bars.png')
 
