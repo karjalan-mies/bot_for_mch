@@ -25,7 +25,7 @@ class UserTelegram(models.Model):
     smart = models.TextField(blank=True, null=True, verbose_name="SMART критерии через запятую")
 
     period = models.DateField(default=86400, verbose_name="Cколько времени готов потратить на подцель")
-
+    debug_string = models.TextField(blank=True, null=True, verbose_name="debug")
     def __str__(self):
         return self.name
 # Create your models here.
