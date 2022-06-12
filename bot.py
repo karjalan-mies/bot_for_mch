@@ -26,26 +26,6 @@ logging.basicConfig(filename='bot.log', level=logging.INFO)
 API_TOKEN = os.environ.get('API_TOKEN')
 
 
-
-# def test(update,env):
-#     pass
-# with open('file.json') as file:
-#     data = json.load(file).get("res")
-#     for mess in data:
-#         m=MessageText()
-#         m.title=mess.get("title")
-#         m.man_text=mess.get("man") if mess.get("man") else None
-#         m.woman_text=mess.get("woman") if mess.get("woman") else None
-#         m.common_text = mess.get("common") if mess.get("common") else None
-#         m.save()
-
-# with open("DB.txt") as DB:
-#     while True:
-#         line = DB.readline().split(" ")
-#         if not line[0]:
-#             break
-# update.message.reply_text('Тест пройден',
-#                           reply_markup=ReplyKeyboardMarkup([['/test']]))
 def report(update, env):
     def make_report():
         user = UserTelegram.objects.get(tg_id=update.message.chat_id)
@@ -71,13 +51,13 @@ def main():
     dp.add_handler(user_profile)
     dp.add_handler(smart)
     dp.add_handler(planning)
-
+    
+    dp.add_handler(MessageHandler(Filters.regex('^(Отчет)$'), report))
     dp.add_handler(CommandHandler('start', greet_user))
-
 
     dp.add_handler(CommandHandler('report', report))
     dp.add_handler(MessageHandler(Filters.text, greet_user))
-
+ 
 
     logging.info('Бот стартовал')
     my_bot.start_polling()
