@@ -6,7 +6,7 @@ import os
 from pathlib import Path
 import json
 
-from telebot import apihelper
+# from telebot import apihelper
 
 import django
 
@@ -41,9 +41,9 @@ def main():
     my_bot.start_polling()
     my_bot.idle()
 
-apihelper.ENABLE_MIDDLEWARE = True
+# apihelper.ENABLE_MIDDLEWARE = True
 
-asyncio.run(test())
+# asyncio.run(test())
 
 
 if __name__ == "__main__":

@@ -13,16 +13,20 @@ def send_image(chat_id: str, context):
 
 
 def about_SMART(update, context):
-    logging.info('Вызов функции "about_SMART"')
-    chat_id = update.message.chat_id
-    send_image(chat_id, context)
-    message_text = get_message_text(211, update)
-    reply_keyboard = [['Дальше']]
-    update.message.reply_text(message_text,
-                              reply_markup=ReplyKeyboardMarkup(
-                                reply_keyboard,
-                                resize_keyboard=True))
-    return 'specific'
+    if update.message.text == 'Нет. Расскажи':
+        logging.info('Вызов функции "about_SMART"')
+        chat_id = update.message.chat_id
+        send_image(chat_id, context)
+        message_text = get_message_text(211, update)
+        reply_keyboard = [['Дальше']]
+        update.message.reply_text(message_text,
+                                reply_markup=ReplyKeyboardMarkup(
+                                    reply_keyboard,
+                                    resize_keyboard=True))
+        return 'specific'
+    elif update.message.text == 'Начать планирование':
+        return 'specific'
+
 
 
 def specific(update, context):
