@@ -26,22 +26,12 @@ from bot_utils.user_profile import greet_user
 logging.basicConfig(filename='bot.log', level=logging.INFO)
 
 API_TOKEN = os.environ.get('API_TOKEN')
-# my_bot = Updater(API_TOKEN, use_context=True)
-# dp = my_bot.dispatcher
 
 
 def test(update,env):
 
     update.message.reply_text('Тест пройден',
                               reply_markup=ReplyKeyboardMarkup([['/test']]))
-    # time.sleep(5)
-    # test=PeriodicTask.objects.create(
-    #     name="TESTTASK",
-    #     task='repeat_test',
-    #     interval=IntervalSchedule.objects.get(every=10, period='seconds'),
-    #     args=json.dumps([update.__dict__]),
-    #     start_time=timezone.now(),
-    # )
 
 
 def main():
@@ -67,9 +57,7 @@ def main():
 #     while True:
 #         users=await get_all_users()
 #         print(users)
-#         logging.info('ВТЕСТЕ')
 #         await asyncio.sleep(1)
-#         print('... World!')
 
 # asyncio.run(test())
 
