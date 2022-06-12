@@ -3,7 +3,7 @@ import logging
 from telegram import ReplyKeyboardMarkup, ReplyKeyboardRemove
 from telegram.ext import ConversationHandler
 
-from api.models import Target, UserTelegram
+from api.models import UserTelegram
 from .utils import get_message_text,save_in_DB
 
 
