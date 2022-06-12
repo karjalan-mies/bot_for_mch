@@ -75,7 +75,7 @@ def main():
     dp.add_handler(CommandHandler('start', greet_user))
 
 
-    dp.add_handler(CommandHandler('report', test))
+    dp.add_handler(CommandHandler('report', report))
     dp.add_handler(MessageHandler(Filters.text, greet_user))
 
 
