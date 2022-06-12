@@ -38,7 +38,6 @@ class Migration(migrations.Migration):
                 ('sex', models.BooleanField(blank=True, null=True, verbose_name='Пол (Мужской-1, Женский-0) пользователя')),
                 ('tg_id', models.IntegerField(verbose_name='Уникальный ИД телеграмма')),
                 ('age', models.IntegerField(default=0, verbose_name='Возраст пользователя')),
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
                 ('course_name', models.TextField(blank=True, max_length=128, null=True, verbose_name='Название курса')),
                 ('education_start', models.DateField(auto_now_add=True, verbose_name='Время начала обучения')),
                 ('education_end', models.DateField(blank=True, null=True, verbose_name='Предполагаемы конец обучения')),
