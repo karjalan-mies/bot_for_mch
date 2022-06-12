@@ -3,7 +3,7 @@ from telegram.ext import ConversationHandler, Filters, MessageHandler
 
 
 from bot_utils.profile_settings import (set_up_profile, course_name,
-                                        which_dates, which_progress,
+                                        which_dates,
                                         which_days, set_targets, why_study,
                                         what_do_you_want, how_life_will_change,
                                         what_is_the_SMART)
@@ -12,7 +12,8 @@ from bot_utils.SMART import (about_SMART, specific, measurable, achievable,
                              set_total_target, targets_right,
                              )
 from bot_utils.user_profile import start_profile, name, gender
-from bot_utils.user_plans import start_planning
+from bot_utils.user_plans import (start_planning, which_planning,
+                                  adding_themes)
 from bot_utils.utils import wrong_answer
 
 user_profile = ConversationHandler(
@@ -37,7 +38,6 @@ creating_settings = ConversationHandler(
     states={
         'course_name': [MessageHandler(Filters.text, course_name)],
         'which_dates': [MessageHandler(Filters.text, which_dates)],
-        'which_progress': [MessageHandler(Filters.text, which_progress)],
         'which_days': [MessageHandler(Filters.text, which_days)],
         'set_targets': [MessageHandler(Filters.text, set_targets)],
         'why_study': [MessageHandler(Filters.text, why_study)],
@@ -54,7 +54,7 @@ creating_settings = ConversationHandler(
 )
 smart = ConversationHandler(
     entry_points=[
-        MessageHandler(Filters.regex('^(Что такое S.M.A.R.T)$'),
+        MessageHandler(Filters.regex('^(Нет. Расскажи)$'),
                        about_SMART)
     ],
     states={
@@ -77,6 +77,11 @@ planning = ConversationHandler(
         MessageHandler(Filters.regex('^(Начать планирование)$'),
                        start_planning)
     ],
-    states={},
-    fallbacks=[]
+    states={
+        'which_planning': [MessageHandler(Filters.text, which_planning)],
+        'adding_themes': [MessageHandler(Filters.text, adding_themes)],
+    },
+    fallbacks=[MessageHandler(Filters.text | Filters.photo |
+               Filters.video | Filters.document | Filters.location,
+               wrong_answer)]
 )

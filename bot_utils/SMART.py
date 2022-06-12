@@ -9,18 +9,24 @@ from .utils import get_message_text,save_in_DB,save_SMART_in_DB
 def send_image(chat_id: str, context):
     with open('bot_utils/image.png', 'rb') as img:
         context.bot.send_photo(chat_id=chat_id,
-                           photo=img)
+                               photo=img)
 
 
 def about_SMART(update, context):
-    logging.info('Вызов функции "about_SMART"')
-    chat_id = update.message.chat_id
-    send_image(chat_id, context)
-    message_text = get_message_text(211, update)
-    reply_keyboard = [['Дальше']]
-    update.message.reply_text(message_text,
-                              reply_markup=ReplyKeyboardMarkup(reply_keyboard))
-    return 'specific'
+    if update.message.text == 'Нет. Расскажи':
+        logging.info('Вызов функции "about_SMART"')
+        chat_id = update.message.chat_id
+        send_image(chat_id, context)
+        message_text = get_message_text(211, update)
+        reply_keyboard = [['Дальше']]
+        update.message.reply_text(message_text,
+                                reply_markup=ReplyKeyboardMarkup(
+                                    reply_keyboard,
+                                    resize_keyboard=True))
+        return 'specific'
+    elif update.message.text == 'Начать планирование':
+        return 'specific'
+
 
 
 def specific(update, context):
@@ -80,7 +86,9 @@ def show_SMART(update, context):
 '''
     reply_keyboard = [['Супер!']]
     update.message.reply_text(message_text,
-                              reply_markup=ReplyKeyboardMarkup(reply_keyboard))
+                              reply_markup=ReplyKeyboardMarkup(
+                                reply_keyboard,
+                                resize_keyboard=True))
     return 'set_total_target'
 
 
@@ -98,5 +106,8 @@ def targets_right(update, context):
     save_in_DB("main_target", update.message.text, update.message.chat_id)
     reply_keyboard = [['Да, все верно', 'Изменить цели']]
     update.message.reply_text(message_text,
-                              reply_markup=ReplyKeyboardMarkup(reply_keyboard))
+                              reply_markup=ReplyKeyboardMarkup(
+                                reply_keyboard,
+                                resize_keyboard=True))
     return ConversationHandler.END
+
