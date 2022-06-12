@@ -13,9 +13,6 @@ import django
 sys.path.append(str(Path(__file__).resolve().parent))
 os.environ['DJANGO_SETTINGS_MODULE'] = 'telega.settings'
 django.setup()
-from api.models import MessageText
-from asgiref.sync import sync_to_async
-from api.models import UserTelegram
 
 from telegram.ext import (CommandHandler, ConversationHandler, Filters,
                           MessageHandler, Updater)
@@ -64,17 +61,9 @@ def main():
     my_bot.start_polling()
     my_bot.idle()
 
-# async def test():
-#     @sync_to_async
-#     def get_all_users():
-#         return list(UserTelegram.objects.all())
-#
-#     while True:
-#         users=await get_all_users()
-#         print(users)
-#         await asyncio.sleep(1)
 
-# asyncio.run(test())
+
+asyncio.run(test())
 
 
 if __name__ == "__main__":
