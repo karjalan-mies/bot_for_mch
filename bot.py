@@ -3,6 +3,7 @@ import sys
 import logging
 import os
 from pathlib import Path
+import json
 
 import django
 
@@ -23,6 +24,7 @@ from api.models import HappinessStore, UserTelegram
 logging.basicConfig(filename='bot.log', level=logging.INFO)
 
 API_TOKEN = os.environ.get('API_TOKEN')
+
 
 
 # def test(update,env):
@@ -60,25 +62,28 @@ def report(update, env):
     #     env.bot.send_document(chat_id=update.message.chat_id, document=doc)
 
 
+
+
 def main():
     my_bot = Updater(API_TOKEN, use_context=True)
     dp = my_bot.dispatcher
-
-    # dp.add_handler(CommandHandler('test', test))
     dp.add_handler(creating_settings)
     dp.add_handler(user_profile)
     dp.add_handler(smart)
     dp.add_handler(planning)
 
     dp.add_handler(CommandHandler('start', greet_user))
-    dp.add_handler(CommandHandler('test', test))
-    dp.add_handler(CommandHandler('report', report))
+
+
+    dp.add_handler(CommandHandler('report', test))
+    dp.add_handler(MessageHandler(Filters.text, greet_user))
+
+
     logging.info('Бот стартовал')
     my_bot.start_polling()
     my_bot.idle()
 
-
-asyncio.run(test())
+# asyncio.run(test())
 
 if __name__ == "__main__":
     main()

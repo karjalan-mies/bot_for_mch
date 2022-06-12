@@ -9,10 +9,9 @@ from telegram.ext import messagequeue as mq
 from api.models import MessageText, UserTelegram,HappinessStore
 from asgiref.sync import sync_to_async
 import matplotlib as mpl
+
 def main_keyboard():
-    return ReplyKeyboardMarkup([
-        ['Представиться']
-    ])
+    return ReplyKeyboardMarkup([['Меню']], resize_keyboard=True)
 
 
 def get_user_gender(update):
@@ -43,15 +42,17 @@ def get_message_text(code, update):
 def wrong_answer(update, context):
     message_text = get_message_text('wrong_answer', update)
     update.message.reply_text(message_text)
-    
-def save_in_DB(row,value,chat_id):
+
+
+def save_in_DB(row, value, chat_id):
     try:
         user = UserTelegram.objects.get(tg_id=chat_id)
         setattr(user, row, value)
         user.save()
-    except:
+    except ObjectDoesNotExist:
         logging.info(f'Пользователь с кодом {chat_id} не найден!')
         return 'Технические проблемы с БД. Сообщите администратору.'
+
 
 def save_SMART_in_DB(value,chat_id):
     try:
