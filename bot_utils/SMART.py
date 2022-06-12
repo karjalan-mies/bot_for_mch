@@ -9,7 +9,7 @@ from .utils import get_message_text
 def send_image(chat_id: str, context):
     with open('bot_utils/image.png', 'rb') as img:
         context.bot.send_photo(chat_id=chat_id,
-                           photo=img)
+                               photo=img)
 
 
 def about_SMART(update, context):
@@ -99,3 +99,4 @@ def targets_right(update, context):
                                 reply_keyboard,
                                 resize_keyboard=True))
     return ConversationHandler.END
+
