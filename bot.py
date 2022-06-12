@@ -37,9 +37,8 @@ def test(update,env):
     #         m.man_text=mess.get("man") if mess.get("man") else None
     #         m.woman_text=mess.get("woman") if mess.get("woman") else None
     #         m.common_text = mess.get("common") if mess.get("common") else None
-    #         q=7
     #         m.save()
-    #     q=7
+
     # with open("DB.txt") as DB:
     #     while True:
     #         line = DB.readline().split(" ")

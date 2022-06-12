@@ -35,6 +35,7 @@ def which_dates(update, context):
     try:
         dates = update.message.text.split()
         user = UserTelegram.objects.get(tg_id=update.message.chat_id)
+        q,w='-'.join(dates[0].split('.')[::-1]),'-'.join(dates[1].split('.')[::-1])
         user.education_start = '-'.join(dates[0].split('.')[::-1])
         user.education_end = '-'.join(dates[1].split('.')[::-1])
         user.save()
@@ -63,6 +64,7 @@ def which_days(update, context):
     logging.info('Вызов функции "which_days"')
     message_text = get_message_text(205, update)
     reply_keyboard = [['Пн', 'Вт', 'Ср', 'Чт', 'Пт', 'Сб', 'Вс']]
+    save_in_DB("remind_interval_in_day", update.message.text, update.message.chat_id)
     update.message.reply_text(message_text,
                               reply_markup=ReplyKeyboardMarkup(reply_keyboard))
     return 'set_targets'
