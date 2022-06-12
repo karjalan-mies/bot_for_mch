@@ -75,7 +75,7 @@ def gender(update, context):
     context.user_data['user_profile']['gender'] = update.message.text#Нужно ли это уже убрать??????????????7
 
     # Сохраняем пол пользователя по его телеграмм ИД
-    sex=context.user_data['user_profile']['gender']
+    sex = context.user_data['user_profile']['gender']
     user = UserTelegram.objects.get(tg_id=update.message.chat_id)
     user.sex = (True if sex == "Мужской" else False)
     user.save()

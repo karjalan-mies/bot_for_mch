@@ -7,4 +7,3 @@ db.sqlite3
 *.DS_Store
 *.jpg
 *.log
-telega/settings.py
