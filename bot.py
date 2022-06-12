@@ -6,6 +6,8 @@ import os
 from pathlib import Path
 import json
 
+from telebot import apihelper
+
 import django
 
 # Загружаем настройки Джанго
@@ -13,10 +15,12 @@ sys.path.append(str(Path(__file__).resolve().parent))
 os.environ['DJANGO_SETTINGS_MODULE'] = 'telega.settings'
 django.setup()
 
-from telegram.ext import CommandHandler, Updater, MessageHandler, Filters
+from telegram.ext import (CommandHandler, ConversationHandler, Filters,
+                          MessageHandler, Updater,messagequeue)
 
 from bot_utils.handlers import user_profile, creating_settings, smart, planning
 from bot_utils.user_profile import greet_user
+from bot_utils.utils import test
 
 logging.basicConfig(filename='bot.log', level=logging.INFO)
 
@@ -37,9 +41,9 @@ def main():
     my_bot.start_polling()
     my_bot.idle()
 
+apihelper.ENABLE_MIDDLEWARE = True
 
-
-# asyncio.run(test())
+asyncio.run(test())
 
 
 if __name__ == "__main__":

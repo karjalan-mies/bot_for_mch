@@ -1,10 +1,11 @@
 import asyncio
 import datetime
 import logging
-
+import os
+import requests
 from django.core.exceptions import ObjectDoesNotExist
 from telegram import ReplyKeyboardMarkup
-
+from telegram.ext import messagequeue as mq
 from api.models import MessageText, UserTelegram
 from asgiref.sync import sync_to_async
 
@@ -66,12 +67,17 @@ def save_SMART_in_DB(value,chat_id):
 async def test():
     @sync_to_async
     def get_today_users():
-        today=datetime.datetime.today().weekday()
-        today_reminds=UserTelegram.objects.filter(remind_interval_in_day=today)
-        for user in today_reminds:
-            pass
+        usr=UserTelegram.objects.all()
+        # for i in usr:
+        #     requests.get(f"https://api.telegram.org/bot{os.environ.get('API_TOKEN')}/sendMessage?chat_id={i.tg_id}&text=Тестовый ТЕКСт")
+
+
+        # today=datetime.datetime.today().weekday()
+        # today_reminds=UserTelegram.objects.filter(remind_interval_in_day=today)
+        # for user in today_reminds:
+        #     pass
         # return
 
     while True:
         await get_today_users()
-        await asyncio.sleep(1)
+        await asyncio.sleep(100)
