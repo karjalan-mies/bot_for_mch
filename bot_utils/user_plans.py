@@ -1,6 +1,6 @@
 import logging
 
-from telegram import ReplyKeyboardMarkup, ReplyKeyboardRemove
+from telegram import ReplyKeyboardMarkup
 from telegram.ext import ConversationHandler
 
 from .utils import get_message_text, main_keyboard

@@ -1,9 +1,9 @@
 import logging
 
 from django.core.exceptions import ObjectDoesNotExist
-from telegram import ParseMode, ReplyKeyboardMarkup, ReplyKeyboardRemove
+from telegram import ReplyKeyboardMarkup, ReplyKeyboardRemove
 from telegram.ext import ConversationHandler
-from .utils import main_keyboard,save_in_DB
+from .utils import save_in_DB
 from api.models import UserTelegram
 
 

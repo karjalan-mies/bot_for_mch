@@ -41,11 +41,10 @@ def about_SMART(update, context):
     message_text = get_message_text(211, update)
     reply_keyboard = [['Дальше']]
     update.message.reply_text(message_text,
-                                reply_markup=ReplyKeyboardMarkup(
-                                reply_keyboard,
-                                resize_keyboard=True))
+                              reply_markup=ReplyKeyboardMarkup(
+                                                reply_keyboard,
+                                                resize_keyboard=True))
     return 'specific'
-
 
 
 def specific(update, context):
@@ -129,4 +128,3 @@ def targets_right(update, context):
                                 reply_keyboard,
                                 resize_keyboard=True))
     return ConversationHandler.END
-
