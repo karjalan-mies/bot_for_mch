@@ -22,7 +22,7 @@ class UserTelegram(models.Model):
     what_you_want = models.TextField(blank=True, null=True, verbose_name="Что ты хочешь от обучения")
     what_changed = models.TextField(blank=True, null=True, verbose_name="Что в твоей жизни изменится после обучения?")
     main_target = models.TextField(blank=True, null=True, verbose_name="Основная цель -задача")
-    smart = models.TextField(blank=True, null=True, verbose_name="SMART критерии через запятую")
+    smart = models.TextField(blank=True, null=True, verbose_name="SMART критерии через @!")
 
     period = models.DateField(blank=True, null=True, verbose_name="Cколько времени готов потратить на подцель")
 
