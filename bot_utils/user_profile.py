@@ -70,10 +70,9 @@ def name(update, context):
 
 def gender(update, context):
     """Заносим пол пользователя в Базу Данных"""
-    context.user_data['user_profile']['gender'] = update.message.text#Нужно ли это уже убрать??????????????7
 
     # Сохраняем пол пользователя по его телеграмм ИД
-    sex = context.user_data['user_profile']['gender']
+    sex = update.message.text
     save_in_DB("sex", True if sex == "Мужской" else False, update.message.chat_id)
     logging.info(f'gender: "{update.message.text}"')
 
