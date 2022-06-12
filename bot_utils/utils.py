@@ -41,3 +41,11 @@ def wrong_answer(update, context):
     message_text = get_message_text('wrong_answer', update)
     update.message.reply_text(message_text)
     
+def save_in_DB(row,value,chat_id):
+    try:
+        user = UserTelegram.objects.get(tg_id=chat_id)
+        setattr(user, row, value)
+        user.save()
+    except:
+        logging.info(f'Пользователь с кодом {chat_id} не найден!')
+        return 'Технические проблемы с БД. Сообщите администратору.'
