@@ -38,11 +38,6 @@ class Migration(migrations.Migration):
                 ('sex', models.BooleanField(blank=True, null=True, verbose_name='Пол (Мужской-1, Женский-0) пользователя')),
                 ('tg_id', models.IntegerField(verbose_name='Уникальный ИД телеграмма')),
                 ('age', models.IntegerField(default=0, verbose_name='Возраст пользователя')),
-            ],
-        ),
-        migrations.CreateModel(
-            name='Target',
-            fields=[
                 ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
                 ('course_name', models.TextField(blank=True, max_length=128, null=True, verbose_name='Название курса')),
                 ('education_start', models.DateField(auto_now_add=True, verbose_name='Время начала обучения')),
@@ -58,7 +53,6 @@ class Migration(migrations.Migration):
                 ('main_target', models.TextField(blank=True, null=True, verbose_name='Основная цель -задача')),
                 ('smart', models.TextField(blank=True, null=True, verbose_name='SMART критерии через запятую')),
                 ('period', models.DateField(default=86400, verbose_name='Cколько времени готов потратить на подцель')),
-                ('user', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='api.usertelegram')),
             ],
         ),
     ]
