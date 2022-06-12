@@ -6,9 +6,10 @@ import requests
 from django.core.exceptions import ObjectDoesNotExist
 from telegram import ReplyKeyboardMarkup
 from telegram.ext import messagequeue as mq
-from api.models import MessageText, UserTelegram
+from api.models import MessageText, UserTelegram,HappinessStore
 from asgiref.sync import sync_to_async
-
+from .report_make import graphs
+import matplotlib as mpl
 def main_keyboard():
     return ReplyKeyboardMarkup([
         ['Представиться']
@@ -64,9 +65,10 @@ def save_SMART_in_DB(value,chat_id):
         return 'Технические проблемы с БД. Сообщите администратору.'
 
 async def test():
+
     @sync_to_async
     def get_today_users():
-        usr=UserTelegram.objects.all()
+        usr=UserTelegram.objects.get(name="example")
         # for i in usr:
         #     requests.get(f"https://api.telegram.org/bot{os.environ.get('API_TOKEN')}/sendMessage?chat_id={i.tg_id}&text=Тестовый ТЕКСт")
 
@@ -77,6 +79,11 @@ async def test():
         #     pass
         # return
 
-    while True:
-        await get_today_users()
-        await asyncio.sleep(100)
+    # while True:
+    #     await get_today_users()
+    #     await asyncio.sleep(100)
+def make_report():
+    pass
+    # happy=HappinessStore.objects.order_by('id').last()
+    # stat=[f"{}@{}@{}@{}",]
+    # graphs()
