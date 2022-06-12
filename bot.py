@@ -20,21 +20,20 @@ from api.models import UserTelegram
 from telegram.ext import (CommandHandler, ConversationHandler, Filters,
                           MessageHandler, Updater)
 
-from bot_utils.profile_settings import set_up_profile, course_name, which_dates
-from bot_utils.user_profile import start_profile, name, gender, greet_user
-
-from bot_utils.utils import wrong_answer
+from bot_utils.handlers import user_profile, creating_settings, smart, planning
+from bot_utils.user_profile import greet_user
 
 logging.basicConfig(filename='bot.log', level=logging.INFO)
 
 API_TOKEN = os.environ.get('API_TOKEN')
-my_bot = Updater(API_TOKEN, use_context=True)
-dp = my_bot.dispatcher
+# my_bot = Updater(API_TOKEN, use_context=True)
+# dp = my_bot.dispatcher
+
 
 def test(update,env):
 #     logging.info('ВТЕСТЕ')
     update.message.reply_text('Тест пройден',
-                                  reply_markup=ReplyKeyboardMarkup([['/test']]))
+                              reply_markup=ReplyKeyboardMarkup([['/test']]))
     # time.sleep(5)
     # test=PeriodicTask.objects.create(
     #     name="TESTTASK",
@@ -45,44 +44,15 @@ def test(update,env):
     # )
 
 
-
 def main():
-    # my_bot = Updater(API_TOKEN, use_context=True)
-    # dp = my_bot.dispatcher
-
-    user_profile = ConversationHandler(
-        entry_points=[
-            MessageHandler(Filters.regex('^(Познакомиться)$'),
-                           start_profile)
-        ],
-        states={
-            'name': [MessageHandler(Filters.text, name)],
-            'gender': [MessageHandler(Filters.regex('^(Мужской|Женский)$'),
-                       gender)],
-        },
-        fallbacks=[
-            MessageHandler(Filters.text | Filters.photo | Filters.video |
-                           Filters.document | Filters.location, wrong_answer)
-        ]
-    )
-    creating_settings = ConversationHandler(
-        entry_points=[
-            MessageHandler(Filters.regex('^(Настроить)$'), set_up_profile)
-        ],
-        states={
-            'course_name': [MessageHandler(Filters.text, course_name)],
-            'which_dates': [MessageHandler(
-                Filters.regex('^\d{2}\.\d{2}\.\d{4} \d{2}\.\d{2}\.\d{4}$'),
-                which_dates)]
-            },
-        fallbacks=[MessageHandler(Filters.text | Filters.photo | Filters.video |
-                           Filters.document | Filters.location, wrong_answer)]
-    )
-
+    my_bot = Updater(API_TOKEN, use_context=True)
+    dp = my_bot.dispatcher
 
     #dp.add_handler(CommandHandler('test', test))
     dp.add_handler(creating_settings)
     dp.add_handler(user_profile)
+    dp.add_handler(smart)
+    dp.add_handler(planning)
 
     dp.add_handler(CommandHandler('start', greet_user))
     logging.info('Бот стартовал')
@@ -103,6 +73,6 @@ def main():
 
 # asyncio.run(test())
 
+
 if __name__ == "__main__":
     main()
-
