@@ -12,12 +12,19 @@ def greet_user(update, context):
     try:
         #Проверка зарегистрирован ли пользователь. Если да, перенаправление в "Личный кабинет"
         user = UserTelegram.objects.get(tg_id=update.message.chat_id)
-        update.message.reply_text(
-            f'Привет, {user.name}!\n' +
-            'Мы уже знакомы. Давай теперь настроим твой профиль',
-            reply_markup=ReplyKeyboardMarkup([['Настроить',
-                                               'Не сейчас']],
-                                             resize_keyboard=True))
+        if user.main_target:
+            update.message.reply_text(
+                'Твои цели определены и сохранены',
+                reply_markup=ReplyKeyboardMarkup([['Посмотреть',
+                                                   'Изменить']],
+                                                    resize_keyboard=True))
+        else:
+            update.message.reply_text(
+                f'Привет, {user.name}!\n' +
+                'Мы уже знакомы. Давай теперь настроим твой профиль',
+                reply_markup=ReplyKeyboardMarkup([['Настроить',
+                                                'Не сейчас']],
+                                                resize_keyboard=True))
     except ObjectDoesNotExist:
         logging.info('Объект в базе не найден. Будет создан новый.')
 

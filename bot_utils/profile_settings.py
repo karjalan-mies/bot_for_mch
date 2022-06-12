@@ -4,7 +4,7 @@ from telegram import ReplyKeyboardMarkup, ReplyKeyboardRemove
 from telegram.ext import ConversationHandler
 
 from api.models import UserTelegram
-from .utils import get_message_text,save_in_DB
+from .utils import get_message_text, save_in_DB
 
 
 def set_up_profile(update, context):
@@ -23,7 +23,7 @@ def course_name(update, context):
             'Название курса не может быть пустым.')
         return 'name'
     else:
-        save_in_DB("course_name",course_name,update.message.chat_id)
+        save_in_DB("course_name", course_name, update.message.chat_id)
         logging.info(f'course_name: "{update.message.text}"')
     message_text = get_message_text(202, update)
     update.message.reply_text(message_text, reply_markup=ReplyKeyboardRemove())
