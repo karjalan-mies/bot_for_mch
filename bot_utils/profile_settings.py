@@ -60,15 +60,15 @@ def which_days(update, context):
     update.message.reply_text(message_text,
                               reply_markup=ReplyKeyboardMarkup(
                                 reply_keyboard,
-                                resize_keyboard=True)
-                              )
+                                resize_keyboard=True))
     return 'set_targets'
 
 
 def set_targets(update, context):
     logging.info('Вызов функции "set_targets"')
     reply_keyboard = [['Ok!']]
-    remind = ['Пн', 'Вт', 'Ср', 'Чт', 'Пт', 'Сб', 'Вс'].index(update.message.text)
+    remind = ['Пн', 'Вт', 'Ср', 'Чт', 'Пт', 'Сб', 'Вс'].index(
+        update.message.text)
     save_in_DB("remind_interval_in_day", remind, update.message.chat_id)
     message_text = get_message_text(206, update)
     update.message.reply_text(message_text,
@@ -81,7 +81,8 @@ def set_targets(update, context):
 def why_study(update, context):
     logging.info('Вызов функции "why_study"')
     message_text = get_message_text(207, update)
-    update.message.reply_text(message_text, reply_markup=ReplyKeyboardRemove())
+    update.message.reply_text(message_text,
+                              reply_markup=ReplyKeyboardRemove())
     return 'what_do_you_want'
 
 
@@ -98,14 +99,13 @@ def how_life_will_change(update, context):
     message_text = get_message_text(209, update)
     save_in_DB("what_you_want", update.message.text, update.message.chat_id)
     update.message.reply_text(message_text, reply_markup=ReplyKeyboardRemove())
-    return 'what_is_the_SMART'
+    return 'do_you_want_smart'
 
 
-def what_is_the_SMART(update, context):
-    logging.info('Вызов функции "what_is_the_SMART"')
+def do_you_want_smart(update, context):
+    logging.info('Вызов функции "do_you_want_smart"')
     message_text = get_message_text(210, update)
-    reply_keyboard = [['Начать планирование', 'Нет. Расскажи']]
-    save_in_DB("what_changed", update.message.text, update.message.chat_id)
+    reply_keyboard = [['Нет, просто опишу цель', 'Хочу по S.M.A.R.T']]
     update.message.reply_text(message_text,
                               reply_markup=ReplyKeyboardMarkup(
                                 reply_keyboard,

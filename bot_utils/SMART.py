@@ -3,7 +3,7 @@ import logging
 from telegram import ReplyKeyboardMarkup, ReplyKeyboardRemove
 from telegram.ext import ConversationHandler
 
-from .utils import get_message_text,save_in_DB,save_SMART_in_DB
+from .utils import get_message_text, save_in_DB, save_SMART_in_DB
 
 
 def send_image(chat_id: str, context):
@@ -12,20 +12,39 @@ def send_image(chat_id: str, context):
                                photo=img)
 
 
-def about_SMART(update, context):
+def what_is_the_SMART(update, context):
+    logging.info('Вызов функции "what_is_the_SMART"')
+    message_text = get_message_text(210, update)
+    reply_keyboard = [['Начать планирование', 'Нет. Расскажи']]
+    save_in_DB("what_changed", update.message.text, update.message.chat_id)
+    update.message.reply_text(message_text,
+                              reply_markup=ReplyKeyboardMarkup(
+                                reply_keyboard,
+                                resize_keyboard=True))
+    return 'check_answer'
+
+
+def check_answer(update, context):
+    logging.info('Вызов функции "check_answer"')
     if update.message.text == 'Нет. Расскажи':
-        logging.info('Вызов функции "about_SMART"')
-        chat_id = update.message.chat_id
-        send_image(chat_id, context)
-        message_text = get_message_text(211, update)
-        reply_keyboard = [['Дальше']]
-        update.message.reply_text(message_text,
-                                reply_markup=ReplyKeyboardMarkup(
-                                    reply_keyboard,
-                                    resize_keyboard=True))
-        return 'specific'
+        logging.info('Должен быть вызов "about_SMART"')
+        return 'about_SMART'
     elif update.message.text == 'Начать планирование':
+        logging.info('Должен быть вызов "specific"')
         return 'specific'
+
+
+def about_SMART(update, context):
+    logging.info('Вызов функции "about_SMART"')
+    chat_id = update.message.chat_id
+    send_image(chat_id, context)
+    message_text = get_message_text(211, update)
+    reply_keyboard = [['Дальше']]
+    update.message.reply_text(message_text,
+                                reply_markup=ReplyKeyboardMarkup(
+                                reply_keyboard,
+                                resize_keyboard=True))
+    return 'specific'
 
 
 
