@@ -3,7 +3,7 @@ import logging
 from django.core.exceptions import ObjectDoesNotExist
 from telegram import ParseMode, ReplyKeyboardMarkup, ReplyKeyboardRemove
 from telegram.ext import ConversationHandler
-from .utils import main_keyboard
+from .utils import main_keyboard,save_in_DB
 from api.models import UserTelegram
 
 
@@ -55,9 +55,7 @@ def name(update, context):
     else:
         context.user_data['user_profile'] = {'name': user_name}#Нужно ли это уже убрать??????????????7
         # Сохраняем имя пользователя по его телеграмм ИД
-        user = UserTelegram.objects.get(tg_id=update.message.chat_id)
-        user.name = user_name
-        user.save()
+        save_in_DB("name",user_name,update.message.chat_id)
         logging.info(f'name: "{update.message.text}"')
 
         # Спрашиваем пол пользователя
@@ -74,9 +72,7 @@ def gender(update, context):
     """Заносим пол пользователя в Базу Данных"""
     # Сохраняем пол пользователя по его телеграмм ИД
     sex = context.user_data['user_profile']['gender']
-    user = UserTelegram.objects.get(tg_id=update.message.chat_id)
-    user.sex = (True if sex == "Мужской" else False)
-    user.save()
+    save_in_DB("sex", True if sex == "Мужской" else False, update.message.chat_id)
     logging.info(f'gender: "{update.message.text}"')
 
     # Спрашиваем , хочет ли пользователь сейчас настроить профиль или позже?

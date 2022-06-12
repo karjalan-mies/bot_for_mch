@@ -7,8 +7,9 @@ from .utils import get_message_text
 
 
 def send_image(chat_id: str, context):
-    context.bot.send_photo(chat_id=chat_id,
-                           photo=open('bot_utils/image.png', 'rb'))
+    with open('bot_utils/image.png', 'rb') as img:
+        context.bot.send_photo(chat_id=chat_id,
+                           photo=img)
 
 
 def about_SMART(update, context):
