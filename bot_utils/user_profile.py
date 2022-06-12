@@ -16,9 +16,8 @@ def greet_user(update, context):
             f'Привет, {user.name}!\n' +
             'Мы уже знакомы. Давай теперь настроим твой профиль',
             reply_markup=ReplyKeyboardMarkup([['Настроить',
-                                               'Не сейчас']]
-                                             )
-        )
+                                               'Не сейчас']],
+                                             resize_keyboard=True))
     except ObjectDoesNotExist:
         logging.info('Объект в базе не найден. Будет создан новый.')
 
@@ -34,7 +33,8 @@ def greet_user(update, context):
             'Моя задача способствовать повышению осознанности и ' +
             'эффективности твоего обучения. '
             'Давай знакомиться',
-            reply_markup=ReplyKeyboardMarkup([['Познакомиться']]))
+            reply_markup=ReplyKeyboardMarkup([['Познакомиться']],
+                                             resize_keyboard=True))
 
 
 def start_profile(update, context):
@@ -63,14 +63,13 @@ def name(update, context):
         update.message.reply_text(
             'Укажи свой пол, чтобы мне было проще строить диалог.',
             reply_markup=ReplyKeyboardMarkup(reply_keyboard,
-                                             one_time_keyboard=True)
-        )
+                                             one_time_keyboard=True,
+                                             resize_keyboard=True))
     return 'gender'
 
 
 def gender(update, context):
     """Заносим пол пользователя в Базу Данных"""
-
     # Сохраняем пол пользователя по его телеграмм ИД
     sex = update.message.text
     save_in_DB("sex", True if sex == "Мужской" else False, update.message.chat_id)
@@ -80,6 +79,7 @@ def gender(update, context):
     keyboard_markup = [['Настроить', 'Не сейчас']]
     update.message.reply_text('Отлично! Теперь можем приступить к настройке' +
                               ' твоего профиля',
-                              reply_markup=ReplyKeyboardMarkup(keyboard_markup)
-                              )
+                              reply_markup=ReplyKeyboardMarkup(
+                                keyboard_markup,
+                                resize_keyboard=True))
     return ConversationHandler.END

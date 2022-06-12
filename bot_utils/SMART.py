@@ -19,7 +19,9 @@ def about_SMART(update, context):
     message_text = get_message_text(211, update)
     reply_keyboard = [['Дальше']]
     update.message.reply_text(message_text,
-                              reply_markup=ReplyKeyboardMarkup(reply_keyboard))
+                              reply_markup=ReplyKeyboardMarkup(
+                                reply_keyboard,
+                                resize_keyboard=True))
     return 'specific'
 
 
@@ -74,7 +76,9 @@ def show_SMART(update, context):
 '''
     reply_keyboard = [['Супер!']]
     update.message.reply_text(message_text,
-                              reply_markup=ReplyKeyboardMarkup(reply_keyboard))
+                              reply_markup=ReplyKeyboardMarkup(
+                                reply_keyboard,
+                                resize_keyboard=True))
     return 'set_total_target'
 
 
@@ -91,5 +95,7 @@ def targets_right(update, context):
     message_text = get_message_text(218, update)
     reply_keyboard = [['Да, все верно', 'Изменить цели']]
     update.message.reply_text(message_text,
-                              reply_markup=ReplyKeyboardMarkup(reply_keyboard))
+                              reply_markup=ReplyKeyboardMarkup(
+                                reply_keyboard,
+                                resize_keyboard=True))
     return ConversationHandler.END

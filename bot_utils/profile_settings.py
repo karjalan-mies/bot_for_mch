@@ -47,16 +47,9 @@ def which_dates(update, context):
     message_text = get_message_text(203, update)
     reply_keyboard = [['Ok!']]
     update.message.reply_text(message_text,
-                              reply_markup=ReplyKeyboardMarkup(reply_keyboard))
-    return 'which_progress'
-
-
-def which_progress(update, context):
-    logging.info('Вызов функции "which_progress"')
-    message_text = get_message_text(204, update)
-    reply_keyboard = [['По каждой теме', 'Общий прогресс']]
-    update.message.reply_text(message_text,
-                              reply_markup=ReplyKeyboardMarkup(reply_keyboard))
+                              reply_markup=ReplyKeyboardMarkup(
+                                reply_keyboard,
+                                resize_keyboard=True))
     return 'which_days'
 
 
@@ -67,7 +60,10 @@ def which_days(update, context):
     remind=['Пн', 'Вт', 'Ср', 'Чт', 'Пт', 'Сб', 'Вс'].index(update.message.text)
     save_in_DB("remind_interval_in_day",remind, update.message.chat_id)
     update.message.reply_text(message_text,
-                              reply_markup=ReplyKeyboardMarkup(reply_keyboard))
+                              reply_markup=ReplyKeyboardMarkup(
+                                reply_keyboard,
+                                resize_keyboard=True)
+                              )
     return 'set_targets'
 
 
@@ -76,7 +72,9 @@ def set_targets(update, context):
     reply_keyboard = [['Ok!']]
     message_text = get_message_text(206, update)
     update.message.reply_text(message_text,
-                              reply_markup=ReplyKeyboardMarkup(reply_keyboard))
+                              reply_markup=ReplyKeyboardMarkup(
+                                reply_keyboard,
+                                resize_keyboard=True))
     return 'why_study'
 
 
@@ -109,5 +107,7 @@ def what_is_the_SMART(update, context):
     message_text = get_message_text(210, update)
     reply_keyboard = [['Начать планирование', 'Что такое S.M.A.R.T']]
     update.message.reply_text(message_text,
-                              reply_markup=ReplyKeyboardMarkup(reply_keyboard))
+                              reply_markup=ReplyKeyboardMarkup(
+                                reply_keyboard,
+                                resize_keyboard=True))
     return ConversationHandler.END

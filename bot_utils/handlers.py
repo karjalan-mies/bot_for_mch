@@ -3,7 +3,7 @@ from telegram.ext import ConversationHandler, Filters, MessageHandler
 
 
 from bot_utils.profile_settings import (set_up_profile, course_name,
-                                        which_dates, which_progress,
+                                        which_dates,
                                         which_days, set_targets, why_study,
                                         what_do_you_want, how_life_will_change,
                                         what_is_the_SMART)
@@ -37,7 +37,6 @@ creating_settings = ConversationHandler(
     states={
         'course_name': [MessageHandler(Filters.text, course_name)],
         'which_dates': [MessageHandler(Filters.text, which_dates)],
-        'which_progress': [MessageHandler(Filters.text, which_progress)],
         'which_days': [MessageHandler(Filters.text, which_days)],
         'set_targets': [MessageHandler(Filters.text, set_targets)],
         'why_study': [MessageHandler(Filters.text, why_study)],
