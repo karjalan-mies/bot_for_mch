@@ -84,7 +84,8 @@ async def test():
     #     await get_today_users()
     #     await asyncio.sleep(100)
 def make_report():
-    pass
-    # happy=HappinessStore.objects.order_by('id').last()
-    # stat=[f"{}@{}@{}@{}",]
-    # graphs()
+    happy=HappinessStore.objects.order_by('id').last()
+    user =happy.get("user")
+    stat=[f"{happy.course_name}@{happy.learn}@{happy.remember}@{happy.task}",happy.regularity_week,happy.emotional_week,happy.motivation_week]
+    time = graphs(stat)
+

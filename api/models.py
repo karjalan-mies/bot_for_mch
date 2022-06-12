@@ -54,9 +54,14 @@ class Imagestore(models.Model):
 
 class HappinessStore(models.Model):
     user = models.ForeignKey(UserTelegram, on_delete=models.CASCADE)
+    course_name = models.TextField(max_length=128, blank=True, null=True, verbose_name="Название курса")
+    thema_now = models.TextField(blank=True, null=True, verbose_name="тема курса")
+    learn = models.TextField(blank=True, null=True, verbose_name="что выучить")
+    remember = models.TextField(blank=True, null=True, verbose_name="что вспомнить")
+    task = models.TextField(blank=True, null=True, verbose_name="текущая задача")
     emotional_week = models.TextField(blank=True, null=True, verbose_name="Эмоции на неделю")
     regularity_week = models.TextField(blank=True, null=True, verbose_name="Регулярность на неделю")
     motivation_week = models.TextField(blank=True, null=True, verbose_name="уровень понимания темы")
-    emotional_month = models.TextField(blank=True, null=True, verbose_name="Общий для всех текст")
-    regularity_month = models.TextField(blank=True, null=True, verbose_name="Общий для всех текст")
-    motivation_month = models.TextField(blank=True, null=True, verbose_name="Общий для всех текст")
+    emotional_month = models.TextField(blank=True, null=True, verbose_name="Эмоции на месяц")
+    regularity_month = models.TextField(blank=True, null=True, verbose_name="Регулярность на месяц")
+    motivation_month = models.TextField(blank=True, null=True, verbose_name="уровень понимания темы на месяц")
