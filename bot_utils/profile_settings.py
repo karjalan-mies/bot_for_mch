@@ -23,11 +23,10 @@ def course_name(update, context):
             'Название курса не может быть пустым.')
         return 'name'
     else:
-        # Сохраняем название курса
-        # user = UserTelegram.objects.get(tg_id=update.message.chat_id)
-        # target = Target.objects.get(user)
-        # target.course_name = course_name
-        # target.save()
+        user = UserTelegram.objects.get(tg_id=update.message.chat_id)
+        user.course_name = course_name
+        user.save()
+
         logging.info(f'course_name: "{update.message.text}"')
     message_text = get_message_text(202, update)
     update.message.reply_text(message_text, reply_markup=ReplyKeyboardRemove())
@@ -36,13 +35,15 @@ def course_name(update, context):
 
 def which_dates(update, context):
     logging.info('Вызов функции "which_dates"')
-    # dates = update.message.text.split()
-    # user = UserTelegram.objects.get(tg_id=update.message.chat_id)
-    # target = Target.objects.get(user)
-    # target.education_start = '-'.join(dates[0].split('.')[::-1])
-    # target.education_start = '-'.join(dates[1].split('.')[::-1])
-    # target.save()
-    # logging.info(f'Добавлены даты обучения с {dates[0]} по {dates[1]}')
+    try:
+        dates = update.message.text.split()
+        user = UserTelegram.objects.get(tg_id=update.message.chat_id)
+        user.education_start = '-'.join(dates[0].split('.')[::-1])
+        user.education_start = '-'.join(dates[1].split('.')[::-1])
+        user.save()
+        logging.info(f'Добавлены даты обучения с {dates[0]} по {dates[1]}')
+    except:
+
     message_text = get_message_text(203, update)
     reply_keyboard = [['Ok!']]
     update.message.reply_text(message_text,

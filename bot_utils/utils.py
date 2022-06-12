@@ -40,3 +40,4 @@ def get_message_text(code, update):
 def wrong_answer(update, context):
     message_text = get_message_text('wrong_answer', update)
     update.message.reply_text(message_text)
+    
