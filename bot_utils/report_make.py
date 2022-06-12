@@ -8,11 +8,12 @@ from datetime import datetime
 from docx.shared import Inches, Pt
 
 
-def graphs(statistic,user):
+def graphs(statistic):
     now = datetime.now()
     time = now.strftime("%m%d%Y%H%M%S")
     os.makedirs(f'stat/{time}')
-    def pie(statistic,time):
+
+    def pie(statistic, time):
         labels = 'Пн', 'Вт', 'Ср', 'Чт', 'Пт', 'Сб', 'Вс'
         sizes = statistic[1].split("")
 
@@ -23,7 +24,8 @@ def graphs(statistic,user):
         ax1.axis('equal')
 
         plt.savefig(f'stat/{time}/pie.png')
-    def bars(statistic,time):
+
+    def bars(statistic, time):
         fig, ax = plt.subplots()
 
         day = ('Пн', 'Вт', 'Ср', 'Чт', 'Пт', 'Сб', 'Вс')
@@ -39,18 +41,18 @@ def graphs(statistic,user):
 
         plt.savefig(f'stat/{time}/bars.png')
 
-
-    def mounts(statistic,time):
+    def mounts(statistic, time):
         names = ('Пн', 'Вт', 'Ср', 'Чт', 'Пт', 'Сб', 'Вс')
-        values =statistic[3].split("")
+        values = statistic[3].split("")
 
         fig, axs = plt.subplots()
         axs.plot(names, values)
         fig.suptitle('Categorical Plotting')
         plt.savefig(f'stat/{time}/mounts.png')
-    def document_save(user,time):
-        tmplt=DocxTemplate("report.docx")
-        stat=statistic[0].split("@")
+
+    def document_save( time):
+        tmplt = DocxTemplate("report.docx")
+        stat = statistic[0].split("@")
         context = {"subject": stat[0],
                    "thema_now": stat[1],
                    "learnA": stat[2],
@@ -58,31 +60,30 @@ def graphs(statistic,user):
                    "task": stat[4],
                    }
         tmplt.render(context)
-        # "Карта эмоционального состояния Уровень мотивации Регулярность занятий"
 
         para = tmplt.add_paragraph().add_run(
             'Регулярность занятий')
         para.font.size = Pt(18)
         para.name = 'PT Sans Narrow'
         para.bold = True
-        tmplt.add_picture('stat/06122022203107/bars.png', width=Inches(3.5))
+        tmplt.add_picture(f'stat/{time}/bars.png', width=Inches(3.5))
 
         para = tmplt.add_paragraph().add_run(
             'Карта эмоционального состояния')
         para.font.size = Pt(18)
         para.name = 'PT Sans Narrow'
         para.bold = True
-        tmplt.add_picture('stat/06122022203107/mounts.png', width=Inches(3.5))
+        tmplt.add_picture(f'stat/{time}/mounts.png', width=Inches(3.5))
         para = tmplt.add_paragraph().add_run(
             'Уровень мотивации')
         para.font.size = Pt(18)
         para.name = 'PT Sans Narrow'
         para.bold = True
-        tmplt.add_picture('stat/06122022203107/pie.png', width=Inches(3.5))
-        tmplt.save("generated_doc.docx")
+        tmplt.add_picture(f'stat/{time}/pie.png', width=Inches(3.5))
+        tmplt.save(f"stat/{time}/generated_doc.docx")
 
-    pie(statistic,time)
-    bars(statistic,time)
-    mounts(statistic,time)
-    document_save(user, time)
-    os.remove(f'stat/{time}')
+    pie(statistic, time)
+    bars(statistic, time)
+    mounts(statistic, time)
+    document_save(time)
+    return time
