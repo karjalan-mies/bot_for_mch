@@ -16,15 +16,16 @@ def greet_user(update, context):
             update.message.reply_text(
                 'Твои цели определены и сохранены',
                 reply_markup=ReplyKeyboardMarkup([['Посмотреть',
-                                                   'Изменить']],
-                                                    resize_keyboard=True))
+                                                   'Изменить',
+                                                   'Отчет']],
+                                                 resize_keyboard=True))
         else:
             update.message.reply_text(
                 f'Привет, {user.name}!\n' +
                 'Мы уже знакомы. Давай теперь настроим твой профиль',
                 reply_markup=ReplyKeyboardMarkup([['Настроить',
-                                                'Не сейчас']],
-                                                resize_keyboard=True))
+                                                   'Не сейчас']],
+                                                 resize_keyboard=True))
     except ObjectDoesNotExist:
         logging.info('Объект в базе не найден. Будет создан новый.')
 

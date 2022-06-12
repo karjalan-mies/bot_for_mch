@@ -10,6 +10,7 @@ from api.models import MessageText, UserTelegram,HappinessStore
 from asgiref.sync import sync_to_async
 import matplotlib as mpl
 
+
 def main_keyboard():
     return ReplyKeyboardMarkup([['Меню']], resize_keyboard=True)
 

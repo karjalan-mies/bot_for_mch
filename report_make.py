@@ -14,7 +14,8 @@ def graphs(statistic):
     os.makedirs(f'stat/{time}')
 
     def pie(statistic, time):
-        labels = 'Пн', 'Вт', 'Ср', 'Чт', 'Пт', 'Сб', 'Вс'
+        labels = ('Оптимизм', 'Тоска', 'Восторг', 'Тревога', 'Интерес',
+                  'Воодушевление', 'Радость')
         sizes = [int(i) for i in statistic[1]]
 
         fig1, ax1 = plt.subplots()
