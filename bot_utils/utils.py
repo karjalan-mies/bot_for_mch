@@ -8,7 +8,6 @@ from telegram import ReplyKeyboardMarkup
 from telegram.ext import messagequeue as mq
 from api.models import MessageText, UserTelegram,HappinessStore
 from asgiref.sync import sync_to_async
-from .report_make import graphs
 import matplotlib as mpl
 def main_keyboard():
     return ReplyKeyboardMarkup([
@@ -82,9 +81,5 @@ async def test():
     # while True:
     #     await get_today_users()
     #     await asyncio.sleep(100)
-def make_report():
-    happy=HappinessStore.objects.order_by('id').last()
-    user =happy.get("user")
-    stat=[f"{happy.course_name}@{happy.learn}@{happy.remember}@{happy.task}",happy.regularity_week,happy.emotional_week,happy.motivation_week]
-    time = graphs(stat)
+
 
