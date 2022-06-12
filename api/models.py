@@ -12,7 +12,7 @@ class UserTelegram(models.Model):
     education_start = models.DateField(auto_now_add=True, verbose_name="Время начала обучения")
     education_end = models.DateField(blank=True, null=True, verbose_name="Предполагаемы конец обучения")
     remind_next = models.DateField(default=86400, verbose_name="Следующее напоминание")
-    remind_interval_in_day = models.IntegerField(default=0, verbose_name="Частота напоминаний")
+    remind_interval_in_day = models.IntegerField(default=0, verbose_name="В какой день напоминать?")
 
     percent_complete = models.IntegerField(default=0, verbose_name="% выполнения цели")
     education_rate = models.TextField(blank=True, null=True, verbose_name="Оценка уровня обучения")
