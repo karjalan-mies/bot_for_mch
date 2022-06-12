@@ -13,9 +13,7 @@ sys.path.append(str(Path(__file__).resolve().parent))
 os.environ['DJANGO_SETTINGS_MODULE'] = 'telega.settings'
 django.setup()
 
-from asgiref.sync import sync_to_async
-
-from telegram.ext import CommandHandler, Updater
+from telegram.ext import CommandHandler, Updater, MessageHandler, Filters
 
 from bot_utils.handlers import user_profile, creating_settings, smart, planning
 from bot_utils.user_profile import greet_user
@@ -34,19 +32,12 @@ def main():
     dp.add_handler(planning)
 
     dp.add_handler(CommandHandler('start', greet_user))
+    dp.add_handler(MessageHandler(Filters.text, greet_user))
     logging.info('Бот стартовал')
     my_bot.start_polling()
     my_bot.idle()
 
-# async def test():
-#     @sync_to_async
-#     def get_all_users():
-#         return list(UserTelegram.objects.all())
-#
-#     while True:
-#         users=await get_all_users()
-#         print(users)
-#         await asyncio.sleep(1)
+
 
 # asyncio.run(test())
 

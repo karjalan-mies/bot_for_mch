@@ -55,7 +55,7 @@ def name(update, context):
     else:
         context.user_data['user_profile'] = {'name': user_name}#Нужно ли это уже убрать??????????????7
         # Сохраняем имя пользователя по его телеграмм ИД
-        save_in_DB("name",user_name,update.message.chat_id)
+        save_in_DB("name", user_name, update.message.chat_id)
         logging.info(f'name: "{update.message.text}"')
 
         # Спрашиваем пол пользователя

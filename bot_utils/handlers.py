@@ -12,7 +12,8 @@ from bot_utils.SMART import (about_SMART, specific, measurable, achievable,
                              set_total_target, targets_right,
                              )
 from bot_utils.user_profile import start_profile, name, gender
-from bot_utils.user_plans import start_planning
+from bot_utils.user_plans import (start_planning, which_planning,
+                                  adding_themes)
 from bot_utils.utils import wrong_answer
 
 user_profile = ConversationHandler(
@@ -53,7 +54,7 @@ creating_settings = ConversationHandler(
 )
 smart = ConversationHandler(
     entry_points=[
-        MessageHandler(Filters.regex('^(Что такое S.M.A.R.T)$'),
+        MessageHandler(Filters.regex('^(Нет. Расскажи)$'),
                        about_SMART)
     ],
     states={
@@ -76,6 +77,11 @@ planning = ConversationHandler(
         MessageHandler(Filters.regex('^(Начать планирование)$'),
                        start_planning)
     ],
-    states={},
-    fallbacks=[]
+    states={
+        'which_planning': [MessageHandler(Filters.text, which_planning)],
+        'adding_themes': [MessageHandler(Filters.text, adding_themes)],
+    },
+    fallbacks=[MessageHandler(Filters.text | Filters.photo |
+               Filters.video | Filters.document | Filters.location,
+               wrong_answer)]
 )

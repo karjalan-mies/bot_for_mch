@@ -1,15 +1,16 @@
+import asyncio
+import datetime
 import logging
 
 from django.core.exceptions import ObjectDoesNotExist
 from telegram import ReplyKeyboardMarkup
 
 from api.models import MessageText, UserTelegram
+from asgiref.sync import sync_to_async
 
 
 def main_keyboard():
-    return ReplyKeyboardMarkup([
-        ['Представиться']
-    ])
+    return ReplyKeyboardMarkup([['Меню']], resize_keyboard=True)
 
 
 def get_user_gender(update):
@@ -50,3 +51,27 @@ def save_in_DB(row, value, chat_id):
     except ObjectDoesNotExist:
         logging.info(f'Пользователь с кодом {chat_id} не найден!')
         return 'Технические проблемы с БД. Сообщите администратору.'
+
+
+def save_SMART_in_DB(value,chat_id):
+    try:
+        user = UserTelegram.objects.get(tg_id=chat_id)
+        user.smart=f"{user.smart}{value}@!"
+        user.save()
+        return user.smart
+    except:
+        logging.info(f'Пользователь с кодом {chat_id} не найден!')
+        return 'Технические проблемы с БД. Сообщите администратору.'
+
+async def test():
+    @sync_to_async
+    def get_today_users():
+        today=datetime.datetime.today().weekday()
+        today_reminds=UserTelegram.objects.filter(remind_interval_in_day=today)
+        for user in today_reminds:
+            pass
+        # return
+
+    while True:
+        await get_today_users()
+        await asyncio.sleep(1)
