@@ -57,7 +57,8 @@ def which_days(update, context):
     logging.info('Вызов функции "which_days"')
     message_text = get_message_text(205, update)
     reply_keyboard = [['Пн', 'Вт', 'Ср', 'Чт', 'Пт', 'Сб', 'Вс']]
-    save_in_DB("remind_interval_in_day", update.message.text, update.message.chat_id)
+    remind=['Пн', 'Вт', 'Ср', 'Чт', 'Пт', 'Сб', 'Вс'].index(update.message.text)
+    save_in_DB("remind_interval_in_day",remind, update.message.chat_id)
     update.message.reply_text(message_text,
                               reply_markup=ReplyKeyboardMarkup(
                                 reply_keyboard,
@@ -80,6 +81,7 @@ def set_targets(update, context):
 def why_study(update, context):
     logging.info('Вызов функции "why_study"')
     message_text = get_message_text(207, update)
+    save_in_DB("what_for", update.message.text, update.message.chat_id)
     update.message.reply_text(message_text, reply_markup=ReplyKeyboardRemove())
     return 'what_do_you_want'
 
@@ -87,6 +89,7 @@ def why_study(update, context):
 def what_do_you_want(update, context):
     logging.info('Вызов функции "what_do_you_want"')
     message_text = get_message_text(208, update)
+    save_in_DB("what_you_want", update.message.text, update.message.chat_id)
     update.message.reply_text(message_text, reply_markup=ReplyKeyboardRemove())
     return 'how_life_will_change'
 
@@ -94,6 +97,7 @@ def what_do_you_want(update, context):
 def how_life_will_change(update, context):
     logging.info('Вызов функции "how_life_will_change"')
     message_text = get_message_text(209, update)
+    save_in_DB("what_changed", update.message.text, update.message.chat_id)
     update.message.reply_text(message_text, reply_markup=ReplyKeyboardRemove())
     return 'what_is_the_SMART'
 
