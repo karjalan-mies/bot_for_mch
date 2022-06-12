@@ -32,18 +32,18 @@ def course_name(update, context):
 
 def which_dates(update, context):
     logging.info('Вызов функции "which_dates"')
-    try:
-        dates = update.message.text.split()
-        user = UserTelegram.objects.get(tg_id=update.message.chat_id)
-        q,w='-'.join(dates[0].split('.')[::-1]),'-'.join(dates[1].split('.')[::-1])
-        user.education_start = '-'.join(dates[0].split('.')[::-1])
-        user.education_end = '-'.join(dates[1].split('.')[::-1])
-        user.save()
-        logging.info(f'Добавлены даты обучения с {dates[0]} по {dates[1]}')
-    except:
-        update.message.reply_text("Похоже что-то пошло не так! проверь введенные данные!",
-                                  reply_markup=ReplyKeyboardMarkup())#НУЖНА РЕАКЦИЯ НА НЕВЕРНЫЙ ВВОД!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-
+    # try:
+    #     dates = update.message.text.split()
+    #     user = UserTelegram.objects.get(tg_id=update.message.chat_id)
+    #     q,w='-'.join(dates[0].split('.')[::-1]),'-'.join(dates[1].split('.')[::-1])
+    #     user.education_start = '-'.join(dates[0].split('.')[::-1])
+    #     user.education_end = '-'.join(dates[1].split('.')[::-1])
+    #     user.save()
+    #     logging.info(f'Добавлены даты обучения с {dates[0]} по {dates[1]}')
+    # except:
+    #     update.message.reply_text("Похоже что-то пошло не так! проверь введенные данные!",
+    #                               reply_markup=ReplyKeyboardMarkup())#НУЖНА РЕАКЦИЯ НА НЕВЕРНЫЙ ВВОД!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+    save_in_DB("education_end", update.message.text, update.message.chat_id)
     message_text = get_message_text(203, update)
     reply_keyboard = [['Ok!']]
     update.message.reply_text(message_text,

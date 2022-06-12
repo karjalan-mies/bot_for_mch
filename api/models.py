@@ -9,9 +9,9 @@ class UserTelegram(models.Model):
     age = models.IntegerField(blank=True, null=True,verbose_name="Возраст пользователя")
 
     course_name = models.TextField(max_length=128, blank=True, null=True, verbose_name="Название курса")
-    education_start = models.DateField(auto_now_add=True,blank=True, null=True, verbose_name="Время начала обучения")
-    education_end = models.DateField(blank=True, null=True, verbose_name="Предполагаемы конец обучения")
-    remind_next = models.DateField(blank=True, null=True, verbose_name="Следующее напоминание")
+    education_start = models.TextField(blank=True, null=True, verbose_name="Время начала обучения")
+    education_end = models.TextField(blank=True, null=True, verbose_name="Предполагаемы конец обучения")
+    remind_next = models.TextField(blank=True, null=True, verbose_name="Следующее напоминание")
     remind_interval_in_day = models.IntegerField(blank=True, null=True, verbose_name="В какой день напоминать?")
 
     percent_complete = models.IntegerField(default=0, verbose_name="% выполнения цели")
