@@ -46,8 +46,8 @@ API_TOKEN = os.environ.get('API_TOKEN')
 #                           reply_markup=ReplyKeyboardMarkup([['/test']]))
 def report(update, env):
     def make_report():
-        happy = HappinessStore.objects.order_by('id').last()
-        user = happy.user
+        user = UserTelegram.objects.get(tg_id=update.message.chat_id)
+        happy = HappinessStore.objects.get(user=user)
         stat = [
             f"{happy.course_name}@{happy.thema_now}@{happy.learn}@{happy.remember}@{happy.task}@{user.education_start}@{user.percent_complete}",
             happy.regularity_week, happy.emotional_week, happy.motivation_week]
