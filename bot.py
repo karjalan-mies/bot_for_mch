@@ -32,7 +32,7 @@ my_bot = Updater(API_TOKEN, use_context=True)
 dp = my_bot.dispatcher
 
 def test(update,env):
-#     logging.info('ВТЕСТЕ')
+
     update.message.reply_text('Тест пройден',
                                   reply_markup=ReplyKeyboardMarkup([['/test']]))
     # time.sleep(5)

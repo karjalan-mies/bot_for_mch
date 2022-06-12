@@ -5,7 +5,7 @@ from telegram import ReplyKeyboardRemove
 from api.models import UserTelegram
 from .utils import get_message_text
 
-
+user=None
 def set_up_profile(update, context):
     logging.info('Вызов функции "set_up_profile"')
     message_text = get_message_text(201, update)
@@ -22,6 +22,7 @@ def course_name(update, context):
         return 'name'
     else:
         # Сохраняем имя пользователя по его телеграмм ИД
+        global user
         user = UserTelegram.objects.get(tg_id=update.message.chat_id)
         user.course_name = course_name
         user.save()
