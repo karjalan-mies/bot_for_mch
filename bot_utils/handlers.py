@@ -3,16 +3,17 @@ from telegram.ext import ConversationHandler, Filters, MessageHandler
 
 
 from bot_utils.profile_settings import (set_up_profile, course_name,
-                                        which_dates, which_progress,
+                                        which_dates,
                                         which_days, set_targets, why_study,
                                         what_do_you_want, how_life_will_change,
-                                        what_is_the_SMART)
+                                        do_you_want_smart)
 from bot_utils.SMART import (about_SMART, specific, measurable, achievable,
                              relevant, time_bound, show_SMART,
                              set_total_target, targets_right,
-                             )
+                             what_is_the_SMART, check_answer)
 from bot_utils.user_profile import start_profile, name, gender
-from bot_utils.user_plans import start_planning
+from bot_utils.user_plans import (start_planning, which_planning,
+                                  adding_themes)
 from bot_utils.utils import wrong_answer
 
 user_profile = ConversationHandler(
@@ -37,7 +38,6 @@ creating_settings = ConversationHandler(
     states={
         'course_name': [MessageHandler(Filters.text, course_name)],
         'which_dates': [MessageHandler(Filters.text, which_dates)],
-        'which_progress': [MessageHandler(Filters.text, which_progress)],
         'which_days': [MessageHandler(Filters.text, which_days)],
         'set_targets': [MessageHandler(Filters.text, set_targets)],
         'why_study': [MessageHandler(Filters.text, why_study)],
@@ -45,8 +45,10 @@ creating_settings = ConversationHandler(
                              what_do_you_want)],
         'how_life_will_change': [MessageHandler(Filters.text,
                                  how_life_will_change)],
-        'what_is_the_SMART': [MessageHandler(Filters.text,
-                              what_is_the_SMART)],
+        'do_you_want_smart': [MessageHandler(Filters.text,
+                              do_you_want_smart)],
+        # 'what_is_the_SMART': [MessageHandler(Filters.text,
+        #                       what_is_the_SMART)],
         },
     fallbacks=[MessageHandler(Filters.text | Filters.photo |
                Filters.video | Filters.document | Filters.location,
@@ -54,10 +56,12 @@ creating_settings = ConversationHandler(
 )
 smart = ConversationHandler(
     entry_points=[
-        MessageHandler(Filters.regex('^(Что такое S.M.A.R.T)$'),
-                       about_SMART)
+        MessageHandler(Filters.regex('^(Хочу по S.M.A.R.T)$'),
+                       what_is_the_SMART)
     ],
     states={
+        'about_SMART': [MessageHandler(Filters.text, about_SMART)],
+        'check_answer': [MessageHandler(Filters.text, check_answer)],
         'specific': [MessageHandler(Filters.text, specific)],
         'measurable': [MessageHandler(Filters.text, measurable)],
         'achievable': [MessageHandler(Filters.text, achievable)],
@@ -74,9 +78,14 @@ smart = ConversationHandler(
 
 planning = ConversationHandler(
     entry_points=[
-        MessageHandler(Filters.regex('^(Начать планирование)$'),
+        MessageHandler(Filters.regex('^(Планирование целей)$'),
                        start_planning)
     ],
-    states={},
-    fallbacks=[]
+    states={
+        'which_planning': [MessageHandler(Filters.text, which_planning)],
+        'adding_themes': [MessageHandler(Filters.text, adding_themes)],
+    },
+    fallbacks=[MessageHandler(Filters.text | Filters.photo |
+               Filters.video | Filters.document | Filters.location,
+               wrong_answer)]
 )

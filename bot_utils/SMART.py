@@ -3,13 +3,35 @@ import logging
 from telegram import ReplyKeyboardMarkup, ReplyKeyboardRemove
 from telegram.ext import ConversationHandler
 
-from .utils import get_message_text,save_in_DB,save_SMART_in_DB
+from .utils import get_message_text, save_in_DB, save_SMART_in_DB
 
 
 def send_image(chat_id: str, context):
     with open('bot_utils/image.png', 'rb') as img:
         context.bot.send_photo(chat_id=chat_id,
-                           photo=img)
+                               photo=img)
+
+
+def what_is_the_SMART(update, context):
+    logging.info('Вызов функции "what_is_the_SMART"')
+    message_text = get_message_text(210, update)
+    reply_keyboard = [['Начать планирование', 'Нет. Расскажи']]
+    save_in_DB("what_changed", update.message.text, update.message.chat_id)
+    update.message.reply_text(message_text,
+                              reply_markup=ReplyKeyboardMarkup(
+                                reply_keyboard,
+                                resize_keyboard=True))
+    return 'check_answer'
+
+
+def check_answer(update, context):
+    logging.info('Вызов функции "check_answer"')
+    if update.message.text == 'Нет. Расскажи':
+        logging.info('Должен быть вызов "about_SMART"')
+        return 'about_SMART'
+    elif update.message.text == 'Начать планирование':
+        logging.info('Должен быть вызов "specific"')
+        return 'specific'
 
 
 def about_SMART(update, context):
@@ -19,8 +41,11 @@ def about_SMART(update, context):
     message_text = get_message_text(211, update)
     reply_keyboard = [['Дальше']]
     update.message.reply_text(message_text,
-                              reply_markup=ReplyKeyboardMarkup(reply_keyboard))
+                                reply_markup=ReplyKeyboardMarkup(
+                                reply_keyboard,
+                                resize_keyboard=True))
     return 'specific'
+
 
 
 def specific(update, context):
@@ -80,7 +105,9 @@ def show_SMART(update, context):
 '''
     reply_keyboard = [['Супер!']]
     update.message.reply_text(message_text,
-                              reply_markup=ReplyKeyboardMarkup(reply_keyboard))
+                              reply_markup=ReplyKeyboardMarkup(
+                                reply_keyboard,
+                                resize_keyboard=True))
     return 'set_total_target'
 
 
@@ -98,5 +125,8 @@ def targets_right(update, context):
     save_in_DB("main_target", update.message.text, update.message.chat_id)
     reply_keyboard = [['Да, все верно', 'Изменить цели']]
     update.message.reply_text(message_text,
-                              reply_markup=ReplyKeyboardMarkup(reply_keyboard))
+                              reply_markup=ReplyKeyboardMarkup(
+                                reply_keyboard,
+                                resize_keyboard=True))
     return ConversationHandler.END
+
