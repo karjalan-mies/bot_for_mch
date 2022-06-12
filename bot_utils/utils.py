@@ -67,8 +67,10 @@ async def test():
     @sync_to_async
     def get_today_users():
         usr=UserTelegram.objects.all()
-        for i in usr:
-            requests.get(f"https://api.telegram.org/bot{os.environ.get('API_TOKEN')}/sendMessage?chat_id={i.tg_id}&text=Тестовый ТЕКСт")
+        # for i in usr:
+        #     requests.get(f"https://api.telegram.org/bot{os.environ.get('API_TOKEN')}/sendMessage?chat_id={i.tg_id}&text=Тестовый ТЕКСт")
+
+
         # today=datetime.datetime.today().weekday()
         # today_reminds=UserTelegram.objects.filter(remind_interval_in_day=today)
         # for user in today_reminds:
