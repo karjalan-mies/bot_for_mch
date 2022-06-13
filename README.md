@@ -6,6 +6,7 @@ bot-for-mch - это бот для Telegram, который способству
 
 ## Дополнительные материалы
 [Описание методологии](https://miro.com/app/board/uXjVOysa1fo=/?share_link_id=557079550908 )
+
 Проект запущен на Heroku, используется база данные PostgreSQL
 
 ## Установка
