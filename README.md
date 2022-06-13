@@ -2,7 +2,7 @@
 
 bot-for-mch - это бот для Telegram, который способствует осознанному прохождению обучения.
 
-![Image alt](https://github.com/karjalan-mies/bot_for_mch/blob/master/bot_utils/image.png)
+![Image alt](https://github.com/karjalan-mies/bot_for_mch/blob/master/bot_utils/screen_bot.png)
 
 Перейти к боту: https://t.me/netology_helper_bot
 
